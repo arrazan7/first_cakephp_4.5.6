@@ -7,6 +7,32 @@
 ?>
 <div class="saleTransactions index content">
     <?= $this->Html->link(__('New Sale Transaction'), ['action' => 'add'], ['class' => 'button float-right']) ?>
+
+    <!-- Form untuk filter tanggal start dan end -->
+    <?= $this->Form->create(null, ['type' => 'get']) ?>
+    <fieldset>
+        <legend><?= __('Filter by Date') ?></legend>
+        <div>
+            <?= $this->Form->control('start_date', [
+                'type' => 'date',
+                'label' => 'Start Date',
+                'value' => $this->request->getQuery('start_date')
+            ]) ?>
+            <?= $this->Form->control('end_date', [
+                'type' => 'date',
+                'label' => 'End Date',
+                'value' => $this->request->getQuery('end_date')
+            ]) ?>
+        </div>
+    </fieldset>
+    <?= $this->Form->button(__('Filter')) ?>
+    <?= $this->Form->end() ?>
+
+    <!-- Tampilkan rentang waktu jika ada filter -->
+    <?php if (!empty($startDate) && !empty($endDate)): ?>
+        <p style="margin-top: 20px;">Menampilkan data dari <?= h($startDate) ?> hingga <?= h($endDate) ?></p>
+    <?php endif; ?>
+
     <h3><?= __('Sale Transactions') ?></h3>
     <div class="table-responsive">
         <table>

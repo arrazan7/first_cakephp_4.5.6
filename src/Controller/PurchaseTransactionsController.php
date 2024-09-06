@@ -35,9 +35,17 @@ class PurchaseTransactionsController extends AppController
 
     public function latihan()
     {
-        // Set kondisi untuk periode tanggal yang diinginkan
-        $startDate = '2024-09-01';
-        $endDate = '2024-09-30';
+        // Tangkap start_date dan end_date dari query string
+        $startDate = $this->request->getQuery('start_date');
+        $endDate = $this->request->getQuery('end_date');
+
+        // Jika tidak ada input tanggal, atur nilai default
+        if (empty($startDate)) {
+            $startDate = '2024-01-01';  // Default start date
+        }
+        if (empty($endDate)) {
+            $endDate = '2024-12-31';    // Default end date
+        }
 
         // Menggunakan query builder ORM untuk memfilter berdasarkan tanggal
         $query = $this->PurchaseTransactions->find()
@@ -50,7 +58,8 @@ class PurchaseTransactionsController extends AppController
         // Gunakan paginate dengan query builder yang sudah difilter
         $purchaseTransactions = $this->paginate($query);
 
-        $this->set(compact('purchaseTransactions'));
+        // Kirim data ke view
+        $this->set(compact('purchaseTransactions', 'startDate', 'endDate'));
     }
 
     /**
