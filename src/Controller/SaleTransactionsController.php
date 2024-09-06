@@ -33,6 +33,26 @@ class SaleTransactionsController extends AppController
         $this->set(compact('saleTransactions'));
     }
 
+    public function latihan()
+    {
+        // Set kondisi untuk periode tanggal yang diinginkan
+        $startDate = '2024-09-01';
+        $endDate = '2024-09-30';
+
+        // Menggunakan query builder ORM untuk memfilter berdasarkan tanggal
+        $query = $this->SaleTransactions->find()
+            ->where([
+                'transaction_date >=' => $startDate,
+                'transaction_date <=' => $endDate
+            ])
+            ->contain(['Employees', 'Customers', 'Stocks']);
+
+        // Gunakan paginate dengan query builder yang sudah difilter
+        $saleTransactions = $this->paginate($query);
+
+        $this->set(compact('saleTransactions'));
+    }
+
     /**
      * View method
      *
