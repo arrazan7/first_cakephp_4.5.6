@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Controller;
@@ -11,6 +12,12 @@ namespace App\Controller;
  */
 class CustomersController extends AppController
 {
+    public function initialize(): void
+    {
+        parent::initialize();
+        $this->Customers = $this->fetchTable('Customers');  // Inisialisasi model
+    }
+
     /**
      * Index method
      *
@@ -21,6 +28,34 @@ class CustomersController extends AppController
         $customers = $this->paginate($this->Customers);
 
         $this->set(compact('customers'));
+    }
+
+    public function latihan()
+    {
+        // Tangkap start_date dan end_date dari query string
+        $startDate = $this->request->getQuery('start_date');
+        $endDate = $this->request->getQuery('end_date');
+
+        // Jika tidak ada input tanggal, atur nilai default
+        if (empty($startDate)) {
+            $startDate = '2024-01-01';  // Default start date
+        }
+        if (empty($endDate)) {
+            $endDate = '2024-12-31';    // Default end date
+        }
+
+        // Menggunakan query builder ORM untuk memfilter berdasarkan tanggal
+        $query = $this->Customers->find()
+            ->where([
+                'created >=' => $startDate,
+                'created <=' => $endDate
+            ]);
+
+        // Gunakan paginate dengan query builder yang sudah difilter
+        $customers = $this->paginate($query);
+
+        // Kirim data ke view
+        $this->set(compact('customers', 'startDate', 'endDate'));
     }
 
     /**

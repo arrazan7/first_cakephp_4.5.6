@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\SaleTransaction $saleTransaction
@@ -59,6 +60,45 @@
                     <td><?= h($saleTransaction->modified) ?></td>
                 </tr>
             </table>
+            <div class="related">
+                <h4><?= __('Related Sale Payments') ?></h4>
+                <?php if (!empty($saleTransaction->sale_payments)) : ?>
+                    <div class="table-responsive">
+                        <table>
+                            <tr>
+                                <th><?= __('Id') ?></th>
+                                <th><?= __('Sell Transaction Id') ?></th>
+                                <th><?= __('Nominal') ?></th>
+                                <th><?= __('Payment Method') ?></th>
+                                <th><?= __('Status') ?></th>
+                                <th><?= __('Payment Date') ?></th>
+                                <th><?= __('Proof') ?></th>
+                                <th><?= __('Created') ?></th>
+                                <th><?= __('Modified') ?></th>
+                                <th class="actions"><?= __('Actions') ?></th>
+                            </tr>
+                            <?php foreach ($saleTransaction->sale_payments as $salePayments) : ?>
+                                <tr>
+                                    <td><?= h($salePayments->id) ?></td>
+                                    <td><?= h($salePayments->sale_transaction_id) ?></td>
+                                    <td><?= h($salePayments->nominal) ?></td>
+                                    <td><?= h($salePayments->payment_method) ?></td>
+                                    <td><?= h($salePayments->status) ?></td>
+                                    <td><?= h($salePayments->payment_date) ?></td>
+                                    <td><?= h($salePayments->proof) ?></td>
+                                    <td><?= h($salePayments->created) ?></td>
+                                    <td><?= h($salePayments->modified) ?></td>
+                                    <td class="actions">
+                                        <?= $this->Html->link(__('View'), ['controller' => 'salePayments', 'action' => 'view', $salePayments->id]) ?>
+                                        <?= $this->Html->link(__('Edit'), ['controller' => 'salePayments', 'action' => 'edit', $salePayments->id]) ?>
+                                        <?= $this->Form->postLink(__('Delete'), ['controller' => 'salePayments', 'action' => 'delete', $salePayments->id], ['confirm' => __('Are you sure you want to delete # {0}?', $salePayments->id)]) ?>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </table>
+                    </div>
+                <?php endif; ?>
+            </div>
         </div>
     </div>
 </div>

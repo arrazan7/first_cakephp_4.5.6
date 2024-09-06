@@ -72,7 +72,7 @@ class SaleTransactionsController extends AppController
     public function view($id = null)
     {
         $saleTransaction = $this->SaleTransactions->get($id, [
-            'contain' => ['Employees', 'Customers', 'Stocks'],
+            'contain' => ['Employees', 'Customers', 'Stocks', 'SalePayments'],
         ]);
 
         $this->set(compact('saleTransaction'));

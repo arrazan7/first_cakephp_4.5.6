@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\PurchaseTransaction $purchaseTransaction
@@ -55,6 +56,45 @@
                     <td><?= h($purchaseTransaction->modified) ?></td>
                 </tr>
             </table>
+            <div class="related">
+                <h4><?= __('Related Purchase Payments') ?></h4>
+                <?php if (!empty($purchaseTransaction->purchase_payments)) : ?>
+                    <div class="table-responsive">
+                        <table>
+                            <tr>
+                                <th><?= __('Id') ?></th>
+                                <th><?= __('Purchase Transaction Id') ?></th>
+                                <th><?= __('Nominal') ?></th>
+                                <th><?= __('Payment Method') ?></th>
+                                <th><?= __('Status') ?></th>
+                                <th><?= __('Payment Date') ?></th>
+                                <th><?= __('Proof') ?></th>
+                                <th><?= __('Created') ?></th>
+                                <th><?= __('Modified') ?></th>
+                                <th class="actions"><?= __('Actions') ?></th>
+                            </tr>
+                            <?php foreach ($purchaseTransaction->purchase_payments as $purchasePayments) : ?>
+                                <tr>
+                                    <td><?= h($purchasePayments->id) ?></td>
+                                    <td><?= h($purchasePayments->purchase_transaction_id) ?></td>
+                                    <td><?= h($purchasePayments->nominal) ?></td>
+                                    <td><?= h($purchasePayments->payment_method) ?></td>
+                                    <td><?= h($purchasePayments->status) ?></td>
+                                    <td><?= h($purchasePayments->payment_date) ?></td>
+                                    <td><?= h($purchasePayments->proof) ?></td>
+                                    <td><?= h($purchasePayments->created) ?></td>
+                                    <td><?= h($purchasePayments->modified) ?></td>
+                                    <td class="actions">
+                                        <?= $this->Html->link(__('View'), ['controller' => 'purchasePayments', 'action' => 'view', $purchasePayments->id]) ?>
+                                        <?= $this->Html->link(__('Edit'), ['controller' => 'purchasePayments', 'action' => 'edit', $purchasePayments->id]) ?>
+                                        <?= $this->Form->postLink(__('Delete'), ['controller' => 'purchasePayments', 'action' => 'delete', $purchasePayments->id], ['confirm' => __('Are you sure you want to delete # {0}?', $purchasePayments->id)]) ?>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </table>
+                    </div>
+                <?php endif; ?>
+            </div>
         </div>
     </div>
 </div>
