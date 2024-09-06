@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @var \App\View\AppView $this
  * @var iterable<\App\Model\Entity\SalePayment> $salePayments
@@ -25,22 +26,22 @@
             </thead>
             <tbody>
                 <?php foreach ($salePayments as $salePayment): ?>
-                <tr>
-                    <td><?= $this->Number->format($salePayment->id) ?></td>
-                    <td><?= $salePayment->has('sale_transaction') ? $this->Html->link($salePayment->sale_transaction->payment_method, ['controller' => 'SaleTransactions', 'action' => 'view', $salePayment->sale_transaction->id]) : '' ?></td>
-                    <td><?= $this->Number->format($salePayment->nominal) ?></td>
-                    <td><?= h($salePayment->payment_method) ?></td>
-                    <td><?= h($salePayment->status) ?></td>
-                    <td><?= h($salePayment->payment_date) ?></td>
-                    <td><?= h($salePayment->proof) ?></td>
-                    <td><?= h($salePayment->created) ?></td>
-                    <td><?= h($salePayment->modified) ?></td>
-                    <td class="actions">
-                        <?= $this->Html->link(__('View'), ['action' => 'view', $salePayment->id]) ?>
-                        <?= $this->Html->link(__('Edit'), ['action' => 'edit', $salePayment->id]) ?>
-                        <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $salePayment->id], ['confirm' => __('Are you sure you want to delete # {0}?', $salePayment->id)]) ?>
-                    </td>
-                </tr>
+                    <tr>
+                        <td><?= $this->Number->format($salePayment->id) ?></td>
+                        <td><?= $salePayment->has('sale_transaction') ? $this->Html->link($salePayment->sale_transaction->id, ['controller' => 'SaleTransactions', 'action' => 'view', $salePayment->sale_transaction->id]) : '' ?></td>
+                        <td><?= $this->Number->format($salePayment->nominal) ?></td>
+                        <td><?= h($salePayment->payment_method) ?></td>
+                        <td><?= h($salePayment->status) ?></td>
+                        <td><?= h($salePayment->payment_date) ?></td>
+                        <td><?= h($salePayment->proof) ?></td>
+                        <td><?= h($salePayment->created) ?></td>
+                        <td><?= h($salePayment->modified) ?></td>
+                        <td class="actions">
+                            <?= $this->Html->link(__('View'), ['action' => 'view', $salePayment->id]) ?>
+                            <?= $this->Html->link(__('Edit'), ['action' => 'edit', $salePayment->id]) ?>
+                            <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $salePayment->id], ['confirm' => __('Are you sure you want to delete # {0}?', $salePayment->id)]) ?>
+                        </td>
+                    </tr>
                 <?php endforeach; ?>
             </tbody>
         </table>

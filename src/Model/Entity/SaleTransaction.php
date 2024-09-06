@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Entity;
@@ -48,4 +49,11 @@ class SaleTransaction extends Entity
         'customer' => true,
         'stock' => true,
     ];
+
+    protected $_virtual = ['full_description'];  // Menambahkan virtual field
+
+    protected function _getFullDescription()
+    {
+        return 'Employee ID: ' . $this->employee_id . ' | Customer ID: ' . $this->customer_id . ' | Stock ID: ' . $this->stock_id . ' | Price: ' . $this->price . ' | Quantity: ' . $this->quantity . ' | Total Price: ' . $this->total_price . ' | Transaction Date: ' . $this->transaction_date;
+    }
 }

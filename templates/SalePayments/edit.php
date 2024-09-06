@@ -24,7 +24,13 @@
             <fieldset>
                 <legend><?= __('Edit Sale Payment') ?></legend>
                 <?php
-                echo $this->Form->control('sale_transaction_id', ['options' => $saleTransactions]);
+                echo $this->Form->control('sale_transaction_id', [
+                    'options' => $saleTransactions, // Data dari controller
+                    'empty' => 'Pilih Sale Transaction',
+                    'label' => 'Sale Transaction',
+                    'valueField' => 'id',  // Menggunakan 'id' sebagai value
+                    'textField' => 'full_description'  // Menampilkan full description
+                ]);
                 echo $this->Form->control('nominal');
                 echo $this->Form->control('payment_method', ['options' => ['Cash' => 'Cash', 'Credit Card' => 'Credit Card', 'Transfer Bank' => 'Transfer Bank', 'Installment-Cash' => 'Installment-Cash', 'Installment-Transfer Bank' => 'Installment-Transfer Bank ', 'Other' => 'Other']]);
                 echo $this->Form->control('status', ['options' => ['Waiting' => 'Waiting', 'Checking' => 'Checking', 'Invalid' => 'Invalid', 'Completed' => 'Completed', 'Cancelled' => 'Cancelled']]);

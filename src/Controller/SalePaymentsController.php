@@ -86,7 +86,10 @@ class SalePaymentsController extends AppController
             }
             $this->Flash->error(__('The sale payment could not be saved. Please, try again.'));
         }
-        $saleTransactions = $this->SalePayments->SaleTransactions->find('list', ['limit' => 200])->all();
+        $saleTransactions = $this->SalePayments->SaleTransactions->find('list', [
+            'keyField' => 'id',
+            'valueField' => 'full_description'  // Menggunakan virtual field
+        ])->toArray();
         $this->set(compact('salePayment', 'saleTransactions'));
     }
 
@@ -111,7 +114,10 @@ class SalePaymentsController extends AppController
             }
             $this->Flash->error(__('The sale payment could not be saved. Please, try again.'));
         }
-        $saleTransactions = $this->SalePayments->SaleTransactions->find('list', ['limit' => 200])->all();
+        $saleTransactions = $this->SalePayments->SaleTransactions->find('list', [
+            'keyField' => 'id',
+            'valueField' => 'full_description'  // Menggunakan virtual field
+        ])->toArray();
         $this->set(compact('salePayment', 'saleTransactions'));
     }
 

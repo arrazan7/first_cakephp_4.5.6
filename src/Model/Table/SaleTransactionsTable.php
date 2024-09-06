@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Table;
@@ -44,7 +45,7 @@ class SaleTransactionsTable extends Table
         parent::initialize($config);
 
         $this->setTable('sale_transactions');
-        $this->setDisplayField('payment_method');
+        $this->setDisplayField('id');
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');

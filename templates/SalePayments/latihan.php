@@ -28,7 +28,7 @@
                 <?php foreach ($salePayments as $salePayment): ?>
                     <tr>
                         <td><?= $this->Number->format($salePayment->id) ?></td>
-                        <td><?= $salePayment->has('sale_transaction') ? $this->Html->link($salePayment->sale_transaction->payment_method, ['controller' => 'SaleTransactions', 'action' => 'view', $salePayment->sale_transaction->id]) : '' ?></td>
+                        <td><?= $salePayment->has('sale_transaction') ? $this->Html->link($salePayment->sale_transaction->id, ['controller' => 'SaleTransactions', 'action' => 'view', $salePayment->sale_transaction->id]) : '' ?></td>
                         <td><?= $this->Number->format($salePayment->nominal) ?></td>
                         <td><?= h($salePayment->payment_method) ?></td>
                         <td><?= h($salePayment->status) ?></td>

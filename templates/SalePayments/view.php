@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\SalePayment $salePayment
@@ -20,7 +21,7 @@
             <table>
                 <tr>
                     <th><?= __('Sale Transaction') ?></th>
-                    <td><?= $salePayment->has('sale_transaction') ? $this->Html->link($salePayment->sale_transaction->payment_method, ['controller' => 'SaleTransactions', 'action' => 'view', $salePayment->sale_transaction->id]) : '' ?></td>
+                    <td><?= $salePayment->has('sale_transaction') ? $this->Html->link($salePayment->sale_transaction->id, ['controller' => 'SaleTransactions', 'action' => 'view', $salePayment->sale_transaction->id]) : '' ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Payment Method') ?></th>
