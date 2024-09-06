@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Entity;
@@ -46,4 +47,11 @@ class Purchase extends Entity
         'supplier' => true,
         'purchase_transactions' => true,
     ];
+
+    protected $_virtual = ['full_description'];  // Menambahkan virtual field
+
+    protected function _getFullDescription()
+    {
+        return $this->merk . ' ' . $this->model . ' ' . $this->engine_capacity . ' cc ' . $this->color . ' ' . $this->production_year;
+    }
 }

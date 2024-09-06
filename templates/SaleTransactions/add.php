@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\SaleTransaction $saleTransaction
@@ -20,17 +21,31 @@
             <fieldset>
                 <legend><?= __('Add Sale Transaction') ?></legend>
                 <?php
-                    echo $this->Form->control('employee_id', ['options' => $employees]);
-                    echo $this->Form->control('customer_id', ['options' => $customers]);
-                    echo $this->Form->control('stock_id', ['options' => $stocks]);
-                    echo $this->Form->control('price');
-                    echo $this->Form->control('quantity');
-                    echo $this->Form->control('total_price');
-                    echo $this->Form->control('transaction_date');
-                    echo $this->Form->control('payment_method');
-                    echo $this->Form->control('status');
-                    echo $this->Form->control('payment_date');
-                    echo $this->Form->control('proof');
+                echo $this->Form->control('employee_id', [
+                    'options' => $employees, // Data dari controller
+                    'empty' => 'Pilih Employee',
+                    'label' => 'Employee',
+                    'valueField' => 'id',  // Menggunakan 'id' sebagai value
+                    'textField' => 'full_description'  // Menampilkan full description
+                ]);
+                echo $this->Form->control('customer_id', [
+                    'options' => $customers, // Data dari controller
+                    'empty' => 'Pilih Customer',
+                    'label' => 'Customer',
+                    'valueField' => 'id',  // Menggunakan 'id' sebagai value
+                    'textField' => 'full_description'  // Menampilkan full description
+                ]);
+                echo $this->Form->control('stock_id', [
+                    'options' => $stocks, // Data dari controller
+                    'empty' => 'Pilih Stock',
+                    'label' => 'Stock',
+                    'valueField' => 'id',  // Menggunakan 'id' sebagai value
+                    'textField' => 'full_description'  // Menampilkan full description
+                ]);
+                echo $this->Form->control('price');
+                echo $this->Form->control('quantity');
+                echo $this->Form->control('total_price');
+                echo $this->Form->control('transaction_date');
                 ?>
             </fieldset>
             <?= $this->Form->button(__('Submit')) ?>

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Entity;
@@ -15,10 +16,6 @@ use Cake\ORM\Entity;
  * @property int $quantity
  * @property int $total_price
  * @property \Cake\I18n\FrozenTime $transaction_date
- * @property string $payment_method
- * @property string $status
- * @property \Cake\I18n\FrozenTime $payment_date
- * @property string $proof
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
  *
@@ -43,13 +40,16 @@ class PurchaseTransaction extends Entity
         'quantity' => true,
         'total_price' => true,
         'transaction_date' => true,
-        'payment_method' => true,
-        'status' => true,
-        'payment_date' => true,
-        'proof' => true,
         'created' => true,
         'modified' => true,
         'employee' => true,
         'purchase' => true,
     ];
+
+    protected $_virtual = ['full_description'];  // Menambahkan virtual field
+
+    protected function _getFullDescription()
+    {
+        return 'Employee ID: ' . $this->employee_id . ' | Purchase ID: ' . $this->purchase_id . ' | Price: ' . $this->price . ' | Quantity: ' . $this->quantity . ' | Total Price: ' . $this->total_price . ' | Transaction Date: ' . $this->transaction_date;
+    }
 }

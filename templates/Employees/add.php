@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Employee $employee
@@ -17,14 +18,14 @@
             <fieldset>
                 <legend><?= __('Add Employee') ?></legend>
                 <?php
-                    echo $this->Form->control('username');
-                    echo $this->Form->control('fullname');
-                    echo $this->Form->control('role');
-                    echo $this->Form->control('phone');
-                    echo $this->Form->control('email');
-                    echo $this->Form->control('address');
-                    echo $this->Form->control('password');
-                    echo $this->Form->control('last_login');
+                echo $this->Form->control('username');
+                echo $this->Form->control('fullname');
+                echo $this->Form->control('role', ['options' => ['Manager' => 'Manager', 'Supervisor' => 'Supervisor', 'Web Developer' => 'Web Developer', 'Sales' => 'Sales']]);
+                echo $this->Form->control('phone');
+                echo $this->Form->control('email');
+                echo $this->Form->control('address');
+                echo $this->Form->control('password');
+                echo $this->Form->control('last_login');
                 ?>
             </fieldset>
             <?= $this->Form->button(__('Submit')) ?>

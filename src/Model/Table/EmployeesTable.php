@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Table;
@@ -43,7 +44,7 @@ class EmployeesTable extends Table
         parent::initialize($config);
 
         $this->setTable('employees');
-        $this->setDisplayField('username');
+        $this->setDisplayField('fullname');
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');

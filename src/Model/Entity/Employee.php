@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Entity;
@@ -57,4 +58,11 @@ class Employee extends Entity
     protected $_hidden = [
         'password',
     ];
+
+    protected $_virtual = ['full_description'];  // Menambahkan virtual field
+
+    protected function _getFullDescription()
+    {
+        return $this->fullname . ' ' . $this->role;
+    }
 }

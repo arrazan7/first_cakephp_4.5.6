@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\PurchaseTransaction $purchaseTransaction
@@ -19,16 +20,24 @@
             <fieldset>
                 <legend><?= __('Add Purchase Transaction') ?></legend>
                 <?php
-                    echo $this->Form->control('employee_id', ['options' => $employees]);
-                    echo $this->Form->control('purchase_id', ['options' => $purchases]);
-                    echo $this->Form->control('price');
-                    echo $this->Form->control('quantity');
-                    echo $this->Form->control('total_price');
-                    echo $this->Form->control('transaction_date');
-                    echo $this->Form->control('payment_method');
-                    echo $this->Form->control('status');
-                    echo $this->Form->control('payment_date');
-                    echo $this->Form->control('proof');
+                echo $this->Form->control('employee_id', [
+                    'options' => $employees, // Data dari controller
+                    'empty' => 'Pilih Employee',
+                    'label' => 'Employee',
+                    'valueField' => 'id',  // Menggunakan 'id' sebagai value
+                    'textField' => 'full_description'  // Menampilkan full description
+                ]);
+                echo $this->Form->control('purchase_id', [
+                    'options' => $purchases, // Data dari controller
+                    'empty' => 'Pilih Purchase',
+                    'label' => 'Purchase',
+                    'valueField' => 'id',  // Menggunakan 'id' sebagai value
+                    'textField' => 'full_description'  // Menampilkan full description
+                ]);
+                echo $this->Form->control('price');
+                echo $this->Form->control('quantity');
+                echo $this->Form->control('total_price');
+                echo $this->Form->control('transaction_date');
                 ?>
             </fieldset>
             <?= $this->Form->button(__('Submit')) ?>

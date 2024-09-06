@@ -20,23 +20,11 @@
             <table>
                 <tr>
                     <th><?= __('Employee') ?></th>
-                    <td><?= $purchaseTransaction->has('employee') ? $this->Html->link($purchaseTransaction->employee->username, ['controller' => 'Employees', 'action' => 'view', $purchaseTransaction->employee->id]) : '' ?></td>
+                    <td><?= $purchaseTransaction->has('employee') ? $this->Html->link($purchaseTransaction->employee->fullname, ['controller' => 'Employees', 'action' => 'view', $purchaseTransaction->employee->id]) : '' ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Purchase') ?></th>
                     <td><?= $purchaseTransaction->has('purchase') ? $this->Html->link($purchaseTransaction->purchase->merk, ['controller' => 'Purchases', 'action' => 'view', $purchaseTransaction->purchase->id]) : '' ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Payment Method') ?></th>
-                    <td><?= h($purchaseTransaction->payment_method) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Status') ?></th>
-                    <td><?= h($purchaseTransaction->status) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Proof') ?></th>
-                    <td><?= h($purchaseTransaction->proof) ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Id') ?></th>
@@ -57,10 +45,6 @@
                 <tr>
                     <th><?= __('Transaction Date') ?></th>
                     <td><?= h($purchaseTransaction->transaction_date) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Payment Date') ?></th>
-                    <td><?= h($purchaseTransaction->payment_date) ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Created') ?></th>

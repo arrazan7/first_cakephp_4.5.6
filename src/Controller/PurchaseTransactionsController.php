@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Controller;
@@ -11,6 +12,12 @@ namespace App\Controller;
  */
 class PurchaseTransactionsController extends AppController
 {
+    public function initialize(): void
+    {
+        parent::initialize();
+        $this->PurchaseTransactions = $this->fetchTable('PurchaseTransactions');  // Inisialisasi model
+    }
+
     /**
      * Index method
      *
@@ -22,6 +29,26 @@ class PurchaseTransactionsController extends AppController
             'contain' => ['Employees', 'Purchases'],
         ];
         $purchaseTransactions = $this->paginate($this->PurchaseTransactions);
+
+        $this->set(compact('purchaseTransactions'));
+    }
+
+    public function latihan()
+    {
+        // Set kondisi untuk periode tanggal yang diinginkan
+        $startDate = '2024-09-01';
+        $endDate = '2024-09-30';
+
+        // Menggunakan query builder ORM untuk memfilter berdasarkan tanggal
+        $query = $this->PurchaseTransactions->find()
+            ->where([
+                'transaction_date >=' => $startDate,
+                'transaction_date <=' => $endDate
+            ])
+            ->contain(['Employees', 'Purchases']);
+
+        // Gunakan paginate dengan query builder yang sudah difilter
+        $purchaseTransactions = $this->paginate($query);
 
         $this->set(compact('purchaseTransactions'));
     }
@@ -59,8 +86,14 @@ class PurchaseTransactionsController extends AppController
             }
             $this->Flash->error(__('The purchase transaction could not be saved. Please, try again.'));
         }
-        $employees = $this->PurchaseTransactions->Employees->find('list', ['limit' => 200])->all();
-        $purchases = $this->PurchaseTransactions->Purchases->find('list', ['limit' => 200])->all();
+        $employees = $this->PurchaseTransactions->Employees->find('list', [
+            'keyField' => 'id',
+            'valueField' => 'full_description'  // Menggunakan virtual field
+        ])->toArray();
+        $purchases = $this->PurchaseTransactions->Purchases->find('list', [
+            'keyField' => 'id',
+            'valueField' => 'full_description'  // Menggunakan virtual field
+        ])->toArray();
         $this->set(compact('purchaseTransaction', 'employees', 'purchases'));
     }
 
@@ -85,8 +118,14 @@ class PurchaseTransactionsController extends AppController
             }
             $this->Flash->error(__('The purchase transaction could not be saved. Please, try again.'));
         }
-        $employees = $this->PurchaseTransactions->Employees->find('list', ['limit' => 200])->all();
-        $purchases = $this->PurchaseTransactions->Purchases->find('list', ['limit' => 200])->all();
+        $employees = $this->PurchaseTransactions->Employees->find('list', [
+            'keyField' => 'id',
+            'valueField' => 'full_description'  // Menggunakan virtual field
+        ])->toArray();
+        $purchases = $this->PurchaseTransactions->Purchases->find('list', [
+            'keyField' => 'id',
+            'valueField' => 'full_description'  // Menggunakan virtual field
+        ])->toArray();
         $this->set(compact('purchaseTransaction', 'employees', 'purchases'));
     }
 

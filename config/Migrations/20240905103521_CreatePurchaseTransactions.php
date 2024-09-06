@@ -28,10 +28,6 @@ class CreatePurchaseTransactions extends AbstractMigration
         $table->addColumn('quantity', 'integer', ['null' => false]);
         $table->addColumn('total_price', 'integer', ['null' => false]);
         $table->addColumn('transaction_date', 'datetime', ['null' => false]);
-        $table->addColumn('payment_method', 'string', ['limit' => 50, 'null' => false]);
-        $table->addColumn('status', 'string', ['limit' => 50, 'null' => false]);
-        $table->addColumn('payment_date', 'datetime');
-        $table->addColumn('proof', 'string', ['limit' => 255]);
         $table->addColumn('created', 'datetime', ['null' => false]);
         $table->addColumn('modified', 'datetime', ['null' => false]);
         $table->create();

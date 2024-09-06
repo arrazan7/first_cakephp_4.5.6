@@ -16,10 +16,6 @@ use Cake\ORM\Entity;
  * @property int $quantity
  * @property int $total_price
  * @property \Cake\I18n\FrozenTime $transaction_date
- * @property string $payment_method
- * @property string $status
- * @property \Cake\I18n\FrozenTime $payment_date
- * @property string $proof
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
  *
@@ -46,10 +42,6 @@ class SaleTransaction extends Entity
         'quantity' => true,
         'total_price' => true,
         'transaction_date' => true,
-        'payment_method' => true,
-        'status' => true,
-        'payment_date' => true,
-        'proof' => true,
         'created' => true,
         'modified' => true,
         'employee' => true,

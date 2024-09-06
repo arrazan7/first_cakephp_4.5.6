@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Controller;
@@ -11,6 +12,12 @@ namespace App\Controller;
  */
 class SaleTransactionsController extends AppController
 {
+    public function initialize(): void
+    {
+        parent::initialize();
+        $this->SaleTransactions = $this->fetchTable('SaleTransactions');  // Inisialisasi model
+    }
+
     /**
      * Index method
      *
@@ -59,9 +66,18 @@ class SaleTransactionsController extends AppController
             }
             $this->Flash->error(__('The sale transaction could not be saved. Please, try again.'));
         }
-        $employees = $this->SaleTransactions->Employees->find('list', ['limit' => 200])->all();
-        $customers = $this->SaleTransactions->Customers->find('list', ['limit' => 200])->all();
-        $stocks = $this->SaleTransactions->Stocks->find('list', ['limit' => 200])->all();
+        $employees = $this->SaleTransactions->Employees->find('list', [
+            'keyField' => 'id',
+            'valueField' => 'full_description'  // Menggunakan virtual field
+        ])->toArray();
+        $customers = $this->SaleTransactions->Customers->find('list', [
+            'keyField' => 'id',
+            'valueField' => 'full_description'  // Menggunakan virtual field
+        ])->toArray();
+        $stocks = $this->SaleTransactions->Stocks->find('list', [
+            'keyField' => 'id',
+            'valueField' => 'full_description'  // Menggunakan virtual field
+        ])->toArray();
         $this->set(compact('saleTransaction', 'employees', 'customers', 'stocks'));
     }
 
@@ -86,9 +102,18 @@ class SaleTransactionsController extends AppController
             }
             $this->Flash->error(__('The sale transaction could not be saved. Please, try again.'));
         }
-        $employees = $this->SaleTransactions->Employees->find('list', ['limit' => 200])->all();
-        $customers = $this->SaleTransactions->Customers->find('list', ['limit' => 200])->all();
-        $stocks = $this->SaleTransactions->Stocks->find('list', ['limit' => 200])->all();
+        $employees = $this->SaleTransactions->Employees->find('list', [
+            'keyField' => 'id',
+            'valueField' => 'full_description'  // Menggunakan virtual field
+        ])->toArray();
+        $customers = $this->SaleTransactions->Customers->find('list', [
+            'keyField' => 'id',
+            'valueField' => 'full_description'  // Menggunakan virtual field
+        ])->toArray();
+        $stocks = $this->SaleTransactions->Stocks->find('list', [
+            'keyField' => 'id',
+            'valueField' => 'full_description'  // Menggunakan virtual field
+        ])->toArray();
         $this->set(compact('saleTransaction', 'employees', 'customers', 'stocks'));
     }
 

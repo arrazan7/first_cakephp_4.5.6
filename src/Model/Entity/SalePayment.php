@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Model\Entity;
@@ -7,20 +6,21 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * Customer Entity
+ * SalePayment Entity
  *
  * @property int $id
- * @property string $name
- * @property string $nik
- * @property string $phone
- * @property string $email
- * @property string $address
+ * @property int $sale_transaction_id
+ * @property int $nominal
+ * @property string $payment_method
+ * @property string $status
+ * @property \Cake\I18n\FrozenTime $payment_date
+ * @property string $proof
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
  *
- * @property \App\Model\Entity\SaleTransaction[] $sale_transactions
+ * @property \App\Model\Entity\SaleTransaction $sale_transaction
  */
-class Customer extends Entity
+class SalePayment extends Entity
 {
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
@@ -32,20 +32,14 @@ class Customer extends Entity
      * @var array<string, bool>
      */
     protected $_accessible = [
-        'name' => true,
-        'nik' => true,
-        'phone' => true,
-        'email' => true,
-        'address' => true,
+        'sale_transaction_id' => true,
+        'nominal' => true,
+        'payment_method' => true,
+        'status' => true,
+        'payment_date' => true,
+        'proof' => true,
         'created' => true,
         'modified' => true,
-        'sale_transactions' => true,
+        'sale_transaction' => true,
     ];
-
-    protected $_virtual = ['full_description'];  // Menambahkan virtual field
-
-    protected function _getFullDescription()
-    {
-        return $this->name . ' ' . $this->nik;
-    }
 }

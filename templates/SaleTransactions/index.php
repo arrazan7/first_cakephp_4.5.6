@@ -19,10 +19,6 @@
                     <th><?= $this->Paginator->sort('quantity') ?></th>
                     <th><?= $this->Paginator->sort('total_price') ?></th>
                     <th><?= $this->Paginator->sort('transaction_date') ?></th>
-                    <th><?= $this->Paginator->sort('payment_method') ?></th>
-                    <th><?= $this->Paginator->sort('status') ?></th>
-                    <th><?= $this->Paginator->sort('payment_date') ?></th>
-                    <th><?= $this->Paginator->sort('proof') ?></th>
                     <th><?= $this->Paginator->sort('created') ?></th>
                     <th><?= $this->Paginator->sort('modified') ?></th>
                     <th class="actions"><?= __('Actions') ?></th>
@@ -32,17 +28,13 @@
                 <?php foreach ($saleTransactions as $saleTransaction): ?>
                 <tr>
                     <td><?= $this->Number->format($saleTransaction->id) ?></td>
-                    <td><?= $saleTransaction->has('employee') ? $this->Html->link($saleTransaction->employee->username, ['controller' => 'Employees', 'action' => 'view', $saleTransaction->employee->id]) : '' ?></td>
+                    <td><?= $saleTransaction->has('employee') ? $this->Html->link($saleTransaction->employee->fullname, ['controller' => 'Employees', 'action' => 'view', $saleTransaction->employee->id]) : '' ?></td>
                     <td><?= $saleTransaction->has('customer') ? $this->Html->link($saleTransaction->customer->name, ['controller' => 'Customers', 'action' => 'view', $saleTransaction->customer->id]) : '' ?></td>
                     <td><?= $saleTransaction->has('stock') ? $this->Html->link($saleTransaction->stock->merk, ['controller' => 'Stocks', 'action' => 'view', $saleTransaction->stock->id]) : '' ?></td>
                     <td><?= $this->Number->format($saleTransaction->price) ?></td>
                     <td><?= $this->Number->format($saleTransaction->quantity) ?></td>
                     <td><?= $this->Number->format($saleTransaction->total_price) ?></td>
                     <td><?= h($saleTransaction->transaction_date) ?></td>
-                    <td><?= h($saleTransaction->payment_method) ?></td>
-                    <td><?= h($saleTransaction->status) ?></td>
-                    <td><?= h($saleTransaction->payment_date) ?></td>
-                    <td><?= h($saleTransaction->proof) ?></td>
                     <td><?= h($saleTransaction->created) ?></td>
                     <td><?= h($saleTransaction->modified) ?></td>
                     <td class="actions">

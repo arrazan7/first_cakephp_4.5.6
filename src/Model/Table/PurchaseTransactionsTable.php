@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Table;
@@ -43,7 +44,7 @@ class PurchaseTransactionsTable extends Table
         parent::initialize($config);
 
         $this->setTable('purchase_transactions');
-        $this->setDisplayField('payment_method');
+        $this->setDisplayField('id');
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
@@ -55,6 +56,9 @@ class PurchaseTransactionsTable extends Table
         $this->belongsTo('Purchases', [
             'foreignKey' => 'purchase_id',
             'joinType' => 'INNER',
+        ]);
+        $this->hasMany('PurchasePayments', [
+            'foreignKey' => 'purchase_transaction_id',
         ]);
     }
 
@@ -93,29 +97,6 @@ class PurchaseTransactionsTable extends Table
             ->dateTime('transaction_date')
             ->requirePresence('transaction_date', 'create')
             ->notEmptyDateTime('transaction_date');
-
-        $validator
-            ->scalar('payment_method')
-            ->maxLength('payment_method', 50)
-            ->requirePresence('payment_method', 'create')
-            ->notEmptyString('payment_method');
-
-        $validator
-            ->scalar('status')
-            ->maxLength('status', 50)
-            ->requirePresence('status', 'create')
-            ->notEmptyString('status');
-
-        $validator
-            ->dateTime('payment_date')
-            ->requirePresence('payment_date', 'create')
-            ->notEmptyDateTime('payment_date');
-
-        $validator
-            ->scalar('proof')
-            ->maxLength('proof', 255)
-            ->requirePresence('proof', 'create')
-            ->notEmptyString('proof');
 
         return $validator;
     }

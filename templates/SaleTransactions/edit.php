@@ -32,10 +32,6 @@
                     echo $this->Form->control('quantity');
                     echo $this->Form->control('total_price');
                     echo $this->Form->control('transaction_date');
-                    echo $this->Form->control('payment_method');
-                    echo $this->Form->control('status');
-                    echo $this->Form->control('payment_date');
-                    echo $this->Form->control('proof');
                 ?>
             </fieldset>
             <?= $this->Form->button(__('Submit')) ?>
