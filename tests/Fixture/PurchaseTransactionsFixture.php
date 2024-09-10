@@ -25,9 +25,10 @@ class PurchaseTransactionsFixture extends TestFixture
                 'price' => 1,
                 'quantity' => 1,
                 'total_price' => 1,
-                'transaction_date' => '2024-09-05 18:38:21',
-                'created' => '2024-09-05 18:38:21',
-                'modified' => '2024-09-05 18:38:21',
+                'transaction_date' => '2024-09-10 02:34:54',
+                'created' => '2024-09-10 02:34:54',
+                'modified' => '2024-09-10 02:34:54',
+                'code' => 'Lorem ipsum dolor sit amet',
             ],
         ];
         parent::init();

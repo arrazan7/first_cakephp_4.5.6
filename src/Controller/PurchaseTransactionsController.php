@@ -85,9 +85,16 @@ class PurchaseTransactionsController extends AppController
      */
     public function add()
     {
+        $this->loadComponent('TransactionCode'); // Load komponen
+
         $purchaseTransaction = $this->PurchaseTransactions->newEmptyEntity();
         if ($this->request->is('post')) {
             $purchaseTransaction = $this->PurchaseTransactions->patchEntity($purchaseTransaction, $this->request->getData());
+
+            // Panggil komponen untuk generate code berdasarkan transaction_date
+            $transactionDate = $purchaseTransaction->transaction_date;
+            $purchaseTransaction->code = $this->TransactionCode->generateCode($transactionDate);
+
             if ($this->PurchaseTransactions->save($purchaseTransaction)) {
                 $this->Flash->success(__('The purchase transaction has been saved.'));
 
@@ -115,11 +122,18 @@ class PurchaseTransactionsController extends AppController
      */
     public function edit($id = null)
     {
+        $this->loadComponent('TransactionCode'); // Load komponen
+
         $purchaseTransaction = $this->PurchaseTransactions->get($id, [
             'contain' => [],
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $purchaseTransaction = $this->PurchaseTransactions->patchEntity($purchaseTransaction, $this->request->getData());
+
+            // Periksa jika transaction_date berubah, update kode transaksi
+            $transactionDate = $purchaseTransaction->transaction_date;
+            $purchaseTransaction->code = $this->TransactionCode->generateCode($transactionDate);
+
             if ($this->PurchaseTransactions->save($purchaseTransaction)) {
                 $this->Flash->success(__('The purchase transaction has been saved.'));
 

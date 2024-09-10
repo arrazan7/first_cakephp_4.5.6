@@ -47,6 +47,14 @@
                     <th><?= __('Total Price') ?></th>
                     <td><?= $this->Number->format($saleTransaction->total_price) ?></td>
                 </tr>
+                <?php
+                // Load VoucherHelper
+                $this->loadHelper('Voucher');
+                ?>
+                <tr>
+                    <th><?= __('Voucher') ?></th>
+                    <td><?= $this->Voucher->getVoucher($saleTransaction->total_price) ?></td>
+                </tr>
                 <tr>
                     <th><?= __('Transaction Date') ?></th>
                     <td><?= h($saleTransaction->transaction_date) ?></td>

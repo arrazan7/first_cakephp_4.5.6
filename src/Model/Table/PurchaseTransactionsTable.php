@@ -14,6 +14,7 @@ use Cake\Validation\Validator;
  *
  * @property \App\Model\Table\EmployeesTable&\Cake\ORM\Association\BelongsTo $Employees
  * @property \App\Model\Table\PurchasesTable&\Cake\ORM\Association\BelongsTo $Purchases
+ * @property \App\Model\Table\PurchasePaymentsTable&\Cake\ORM\Association\HasMany $PurchasePayments
  *
  * @method \App\Model\Entity\PurchaseTransaction newEmptyEntity()
  * @method \App\Model\Entity\PurchaseTransaction newEntity(array $data, array $options = [])
@@ -97,6 +98,17 @@ class PurchaseTransactionsTable extends Table
             ->dateTime('transaction_date')
             ->requirePresence('transaction_date', 'create')
             ->notEmptyDateTime('transaction_date');
+
+        $validator
+            ->scalar('code')
+            ->maxLength('code', 30)
+            ->requirePresence('code', 'create')
+            ->notEmptyString('code')
+            ->add('code', 'unique', [
+                'rule' => 'validateUnique',
+                'provider' => 'table',
+                'message' => 'Code must be unique.'
+            ]);
 
         return $validator;
     }

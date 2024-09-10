@@ -32,6 +32,10 @@
                     <td><?= $this->Number->format($purchaseTransaction->id) ?></td>
                 </tr>
                 <tr>
+                    <th><?= __('Code') ?></th>
+                    <td><?= h($purchaseTransaction->code) ?></td>
+                </tr>
+                <tr>
                     <th><?= __('Price') ?></th>
                     <td><?= $this->Number->format($purchaseTransaction->price) ?></td>
                 </tr>
