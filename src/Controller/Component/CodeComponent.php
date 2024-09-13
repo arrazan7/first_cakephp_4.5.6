@@ -5,11 +5,11 @@ namespace App\Controller\Component;
 use Cake\Controller\Component;
 use Cake\Datasource\ModelAwareTrait;
 
-class TransactionCodeComponent extends Component
+class CodeComponent extends Component
 {
     use ModelAwareTrait;
 
-    public function generateCode($transactionDate, $transactionType = 'PCTS')
+    public function generateCodePCTS($transactionDate, $transactionType = 'PCTS')
     {
         // Format tanggal menjadi tahun dan bulan
         $yearMonth = $transactionDate->format('ym'); // Tahun dan bulan dari transaction_date

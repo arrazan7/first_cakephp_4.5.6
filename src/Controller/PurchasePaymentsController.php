@@ -16,6 +16,23 @@ class PurchasePaymentsController extends AppController
     {
         parent::initialize();
         $this->PurchasePayments = $this->fetchTable('PurchasePayments');  // Inisialisasi model
+        $this->loadComponent('Authentication.Authentication'); // Memuat AuthenticationComponent
+    }
+
+    public function beforeFilter(\Cake\Event\EventInterface $event)
+    {
+        parent::beforeFilter($event);
+
+        // Aksi yang bisa diakses tanpa autentikasi
+        // $this->Authentication->addUnauthenticatedActions(['publicAction']);
+
+        // Cek apakah pengguna sudah terautentikasi
+        $result = $this->Authentication->getResult();
+        if (!$result->isValid()) {
+            // Jika pengguna belum login, arahkan ke halaman login
+            $this->Flash->error('Anda harus login terlebih dahulu.');
+            return $this->redirect(['controller' => 'Employees', 'action' => 'login']);
+        }
     }
 
     /**

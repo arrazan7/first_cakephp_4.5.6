@@ -1,7 +1,10 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Controller;
+
+use Authentication\PasswordHasher\DefaultPasswordHasher;
 
 /**
  * Employees Controller
@@ -11,6 +14,12 @@ namespace App\Controller;
  */
 class EmployeesController extends AppController
 {
+    public function initialize(): void
+    {
+        parent::initialize();
+        $this->loadComponent('Authentication.Authentication'); // Memuat AuthenticationComponent
+    }
+
     /**
      * Index method
      *
@@ -33,7 +42,7 @@ class EmployeesController extends AppController
     public function view($id = null)
     {
         $employee = $this->Employees->get($id, [
-            'contain' => ['PurchaseTransactions', 'SaleTransactions'],
+            'contain' => ['Customers', 'PurchaseTransactions', 'SaleTransactions'],
         ]);
 
         $this->set(compact('employee'));
@@ -102,4 +111,92 @@ class EmployeesController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
+    public function beforeFilter(\Cake\Event\EventInterface $event)
+    {
+        parent::beforeFilter($event);
+        // Mengizinkan aksi login untuk pengguna yang belum terautentikasi
+        $this->Authentication->addUnauthenticatedActions(['login']);
+    }
+
+    public function login()
+    {
+        // Mengizinkan metode GET dan POST untuk login
+        $this->request->allowMethod(['get', 'post']);
+
+        // Cek apakah ini adalah request POST
+        if ($this->request->is('post')) {
+            // Mendapatkan data dari form
+            $username = $this->request->getData('username'); // Bisa username atau email
+            $password = $this->request->getData('password');
+
+            // Cek apakah form memiliki nilai username dan password
+            if (!empty($username) && !empty($password)) {
+                // Mencari employee berdasarkan username atau email
+                $employee = $this->Employees->find('auth', ['username' => $username])->first();
+
+                // Jika employee ditemukan dan password sesuai
+                if ($employee && password_verify($password, $employee->password)) {
+                    // Set session atau autentikasi di sini, misalnya menggunakan plugin Authentication
+                    $this->Authentication->setIdentity($employee);
+
+                    //create session users
+                    $authUser = $this->Authentication->getIdentity();
+                    $session = $this->getRequest()->getSession();
+                    $session->write('Auth.id', $authUser->get('id'));
+
+                    // Redirect ke halaman yang diminta atau default
+                    $redirect = $this->request->getQuery('redirect', [
+                        'controller' => 'Pages',
+                        'action' => 'display',
+                        'home'
+                    ]);
+
+                    return $this->redirect($redirect);
+                }
+
+                // Jika autentikasi gagal
+                return $this->Flash->error(__('Username atau password tidak valid'));
+            }
+
+            // Jika autentikasi gagal
+            return $this->Flash->error(__('Username atau password harus diisi'));
+        }
+
+        // Jika GET request, tampilkan form login
+    }
+
+
+    public function logout()
+    {
+        // Cek apakah pengguna sudah terautentikasi sebelum logout
+        $result = $this->Authentication->getResult();
+        if ($result->isValid()) {
+            $this->Authentication->logout();
+            // Menghapus semua data session
+            $session = $this->getRequest()->getSession();
+            $session->destroy();
+            return $this->redirect(['controller' => 'Employees', 'action' => 'login']);
+        }
+    }
+
+    // Method untuk meng-hash password yang sudah ada. Fungsi sekali pakai !!! http://localhost:8765/employees/hashExistingPasswords
+    // public function hashExistingPasswords()
+    // {
+    //     // Ambil semua karyawan yang masih menggunakan password "rahasia"
+    //     $employees = $this->Employees->find('all')->where(['password' => 'rahasia']);
+
+    //     // Lakukan hash pada password "rahasia"
+    //     foreach ($employees as $employee) {
+    //         $hashedPassword = (new DefaultPasswordHasher())->hash('rahasia');
+    //         $employee->password = $hashedPassword;
+    //         $this->Employees->save($employee);
+    //     }
+
+    //     // Berikan notifikasi bahwa password sudah diperbarui
+    //     $this->Flash->success(__('Passwords have been updated.'));
+
+    //     // Redirect ke halaman lain setelah selesai
+    //     return $this->redirect(['action' => 'index']);
+    // }
 }

@@ -51,7 +51,11 @@ class SaleTransactionsTable extends Table
         $this->addBehavior('Timestamp');
 
         $this->belongsTo('Employees', [
-            'foreignKey' => 'employee_id',
+            'foreignKey' => 'created_by',
+            'joinType' => 'INNER',
+        ]);
+        $this->belongsTo('Employees', [
+            'foreignKey' => 'modified_by',
             'joinType' => 'INNER',
         ]);
         $this->belongsTo('Customers', [
@@ -75,10 +79,6 @@ class SaleTransactionsTable extends Table
      */
     public function validationDefault(Validator $validator): Validator
     {
-        $validator
-            ->integer('employee_id')
-            ->notEmptyString('employee_id');
-
         $validator
             ->integer('customer_id')
             ->notEmptyString('customer_id');
@@ -107,6 +107,14 @@ class SaleTransactionsTable extends Table
             ->requirePresence('transaction_date', 'create')
             ->notEmptyDateTime('transaction_date');
 
+        $validator
+            ->integer('created_by')
+            ->notEmptyString('created_by');
+
+        $validator
+            ->integer('modified_by')
+            ->notEmptyString('modified_by');
+
         return $validator;
     }
 
@@ -119,7 +127,8 @@ class SaleTransactionsTable extends Table
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {
-        $rules->add($rules->existsIn('employee_id', 'Employees'), ['errorField' => 'employee_id']);
+        $rules->add($rules->existsIn('created_by', 'Employees'), ['errorField' => 'created_by']);
+        $rules->add($rules->existsIn('modified_by', 'Employees'), ['errorField' => 'modified_by']);
         $rules->add($rules->existsIn('customer_id', 'Customers'), ['errorField' => 'customer_id']);
         $rules->add($rules->existsIn('stock_id', 'Stocks'), ['errorField' => 'stock_id']);
 

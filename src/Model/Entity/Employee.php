@@ -6,6 +6,8 @@ namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
 
+use Authentication\PasswordHasher\DefaultPasswordHasher;
+
 /**
  * Employee Entity
  *
@@ -46,6 +48,7 @@ class Employee extends Entity
         'last_login' => true,
         'created' => true,
         'modified' => true,
+        'customers' => true,
         'purchase_transactions' => true,
         'sale_transactions' => true,
     ];
@@ -64,5 +67,12 @@ class Employee extends Entity
     protected function _getFullDescription()
     {
         return $this->fullname . ' ' . $this->role;
+    }
+
+    // Automatically hash passwords when they are changed.
+    protected function _setPassword(string $password)
+    {
+        $hasher = new DefaultPasswordHasher();
+        return $hasher->hash($password);
     }
 }

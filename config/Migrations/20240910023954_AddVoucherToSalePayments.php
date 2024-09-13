@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use Migrations\AbstractMigration;
 
-class AddVoucherToSellPayments extends AbstractMigration
+class AddVoucherToSalePayments extends AbstractMigration
 {
     /**
      * Change Method.
@@ -15,11 +15,11 @@ class AddVoucherToSellPayments extends AbstractMigration
      */
     public function change(): void
     {
-        $table = $this->table('sale_payments');
-        $table->addColumn('voucher', 'string', [
-            'limit' => 30,
-        ]);
+        // $table = $this->table('sale_payments');
+        // $table->addColumn('voucher', 'string', [
+        //     'limit' => 30,
+        // ]);
 
-        $table->update();
+        // $table->update();
     }
 }

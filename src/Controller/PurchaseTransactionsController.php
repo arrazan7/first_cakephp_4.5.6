@@ -16,6 +16,23 @@ class PurchaseTransactionsController extends AppController
     {
         parent::initialize();
         $this->PurchaseTransactions = $this->fetchTable('PurchaseTransactions');  // Inisialisasi model
+        $this->loadComponent('Authentication.Authentication'); // Memuat AuthenticationComponent
+    }
+
+    public function beforeFilter(\Cake\Event\EventInterface $event)
+    {
+        parent::beforeFilter($event);
+
+        // Aksi yang bisa diakses tanpa autentikasi
+        // $this->Authentication->addUnauthenticatedActions(['publicAction']);
+
+        // Cek apakah pengguna sudah terautentikasi
+        $result = $this->Authentication->getResult();
+        if (!$result->isValid()) {
+            // Jika pengguna belum login, arahkan ke halaman login
+            $this->Flash->error('Anda harus login terlebih dahulu.');
+            return $this->redirect(['controller' => 'Employees', 'action' => 'login']);
+        }
     }
 
     /**
@@ -85,7 +102,7 @@ class PurchaseTransactionsController extends AppController
      */
     public function add()
     {
-        $this->loadComponent('TransactionCode'); // Load komponen
+        $this->loadComponent('Code'); // Load komponen
 
         $purchaseTransaction = $this->PurchaseTransactions->newEmptyEntity();
         if ($this->request->is('post')) {
@@ -93,7 +110,7 @@ class PurchaseTransactionsController extends AppController
 
             // Panggil komponen untuk generate code berdasarkan transaction_date
             $transactionDate = $purchaseTransaction->transaction_date;
-            $purchaseTransaction->code = $this->TransactionCode->generateCode($transactionDate);
+            $purchaseTransaction->code = $this->Code->generateCodePCTS($transactionDate);
 
             if ($this->PurchaseTransactions->save($purchaseTransaction)) {
                 $this->Flash->success(__('The purchase transaction has been saved.'));
@@ -132,7 +149,7 @@ class PurchaseTransactionsController extends AppController
 
             // Periksa jika transaction_date berubah, update kode transaksi
             $transactionDate = $purchaseTransaction->transaction_date;
-            $purchaseTransaction->code = $this->TransactionCode->generateCode($transactionDate);
+            $purchaseTransaction->code = $this->Code->generateCodePCTS($transactionDate);
 
             if ($this->PurchaseTransactions->save($purchaseTransaction)) {
                 $this->Flash->success(__('The purchase transaction has been saved.'));

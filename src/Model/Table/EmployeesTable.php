@@ -49,12 +49,30 @@ class EmployeesTable extends Table
 
         $this->addBehavior('Timestamp');
 
+        $this->hasMany('Customers', [
+            'className' => 'Customers',
+            'foreignKey' => 'created_by',
+        ]);
+        $this->hasMany('Customers', [
+            'className' => 'Customers',
+            'foreignKey' => 'modified_by',
+        ]);
+
         $this->hasMany('PurchaseTransactions', [
-            'foreignKey' => 'employee_id',
+            'foreignKey' => 'created_by',
+        ]);
+        $this->hasMany('PurchaseTransactions', [
+            'foreignKey' => 'modified_by',
+        ]);
+
+        $this->hasMany('SaleTransactions', [
+            'foreignKey' => 'created_by',
         ]);
         $this->hasMany('SaleTransactions', [
-            'foreignKey' => 'employee_id',
+            'foreignKey' => 'modified_by',
         ]);
+
+        //
     }
 
     /**
@@ -123,7 +141,24 @@ class EmployeesTable extends Table
     public function buildRules(RulesChecker $rules): RulesChecker
     {
         $rules->add($rules->isUnique(['username']), ['errorField' => 'username']);
+        $rules->add($rules->isUnique(['email']), ['errorField' => 'email']);
 
         return $rules;
+    }
+
+    public function findAuth(Query $query, array $options)
+    {
+        $username = $options['username'] ?? null; // Menangani jika username tidak di-set
+
+        if (empty($username)) {
+            return $query->where(['1 = 0']); // Jika username/email kosong, tidak ada hasil yang dikembalikan
+        }
+
+        return $query->where([
+            'OR' => [
+                'username' => $username,
+                'email' => $username
+            ]
+        ]);
     }
 }

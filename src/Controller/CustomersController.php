@@ -16,6 +16,23 @@ class CustomersController extends AppController
     {
         parent::initialize();
         $this->Customers = $this->fetchTable('Customers');  // Inisialisasi model
+        $this->loadComponent('Authentication.Authentication'); // Memuat AuthenticationComponent
+    }
+
+    public function beforeFilter(\Cake\Event\EventInterface $event)
+    {
+        parent::beforeFilter($event);
+
+        // Aksi yang bisa diakses tanpa autentikasi
+        // $this->Authentication->addUnauthenticatedActions(['publicAction']);
+
+        // Cek apakah pengguna sudah terautentikasi
+        $result = $this->Authentication->getResult();
+        if (!$result->isValid()) {
+            // Jika pengguna belum login, arahkan ke halaman login
+            $this->Flash->error('Anda harus login terlebih dahulu.');
+            return $this->redirect(['controller' => 'Employees', 'action' => 'login']);
+        }
     }
 
     /**
@@ -25,6 +42,9 @@ class CustomersController extends AppController
      */
     public function index()
     {
+        $this->paginate = [
+            'contain' => ['Employees'],
+        ];
         $customers = $this->paginate($this->Customers);
 
         $this->set(compact('customers'));
@@ -68,7 +88,7 @@ class CustomersController extends AppController
     public function view($id = null)
     {
         $customer = $this->Customers->get($id, [
-            'contain' => ['SaleTransactions'],
+            'contain' => ['SaleTransactions', 'CreatedByEmployee', 'ModifiedByEmployee'],
         ]);
 
         $this->set(compact('customer'));
@@ -84,6 +104,24 @@ class CustomersController extends AppController
         $customer = $this->Customers->newEmptyEntity();
         if ($this->request->is('post')) {
             $customer = $this->Customers->patchEntity($customer, $this->request->getData());
+
+            $session = $this->getRequest()->getSession();
+            // Memeriksa keberadaan data authentikasi ID Employee di session
+            if ($session->check('Auth.id')) {
+                // Data Session tersedia
+                $employeeId = $session->read('Auth.id');
+                $customer->created_by = $employeeId;
+                $customer->modified_by = $employeeId;
+            } else {
+                // Data Session tidak tersedia
+                $this->Flash->error(__('Your session has expired. Please log in again.'));
+                return $this->redirect([
+                    'controller' => 'Employees',
+                    'action' => 'login',
+                    'login'
+                ]);
+            }
+
             if ($this->Customers->save($customer)) {
                 $this->Flash->success(__('The customer has been saved.'));
 
@@ -108,6 +146,26 @@ class CustomersController extends AppController
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $customer = $this->Customers->patchEntity($customer, $this->request->getData());
+
+            $session = $this->getRequest()->getSession();
+            // Memeriksa keberadaan data authentikasi ID Employee di session
+            if ($session->check('Auth.id')) {
+                // Data Session tersedia
+                $employeeId = $session->read('Auth.id');
+                $customer->modified_by = $employeeId;
+            } else {
+                // Data Session tidak tersedia
+                $this->Flash->error(__('Your session has expired. Please log in again.'));
+                return $this->redirect([
+                    'controller' => 'Employees',
+                    'action' => 'login',
+                    'login'
+                ]);
+            }
+
+            // Cegah perubahan pada field created_by
+            unset($customer->created_by);
+
             if ($this->Customers->save($customer)) {
                 $this->Flash->success(__('The customer has been saved.'));
 

@@ -51,7 +51,11 @@ class PurchaseTransactionsTable extends Table
         $this->addBehavior('Timestamp');
 
         $this->belongsTo('Employees', [
-            'foreignKey' => 'employee_id',
+            'foreignKey' => 'created_by',
+            'joinType' => 'INNER',
+        ]);
+        $this->belongsTo('Employees', [
+            'foreignKey' => 'modified_by',
             'joinType' => 'INNER',
         ]);
         $this->belongsTo('Purchases', [
@@ -110,6 +114,14 @@ class PurchaseTransactionsTable extends Table
                 'message' => 'Code must be unique.'
             ]);
 
+        $validator
+            ->integer('created_by')
+            ->notEmptyString('created_by');
+
+        $validator
+            ->integer('modified_by')
+            ->notEmptyString('modified_by');
+
         return $validator;
     }
 
@@ -122,7 +134,8 @@ class PurchaseTransactionsTable extends Table
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {
-        $rules->add($rules->existsIn('employee_id', 'Employees'), ['errorField' => 'employee_id']);
+        $rules->add($rules->existsIn('created_by', 'Employees'), ['errorField' => 'created_by']);
+        $rules->add($rules->existsIn('modified_by', 'Employees'), ['errorField' => 'modified_by']);
         $rules->add($rules->existsIn('purchase_id', 'Purchases'), ['errorField' => 'purchase_id']);
 
         return $rules;

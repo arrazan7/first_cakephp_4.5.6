@@ -30,13 +30,19 @@ use Cake\ORM\Locator\TableLocator;
 use Cake\Routing\Middleware\AssetMiddleware;
 use Cake\Routing\Middleware\RoutingMiddleware;
 
+use Authentication\AuthenticationService;
+use Authentication\AuthenticationServiceInterface;
+use Authentication\AuthenticationServiceProviderInterface;
+use Authentication\Middleware\AuthenticationMiddleware;
+use Psr\Http\Message\ServerRequestInterface;
+
 /**
  * Application setup class.
  *
  * This defines the bootstrapping logic and middleware layers you
  * want to use in your application.
  */
-class Application extends BaseApplication
+class Application extends BaseApplication implements AuthenticationServiceProviderInterface //add implements ke AuthenticationServiceProviderInterface
 {
     /**
      * Load all the application configuration and bootstrap logic.
@@ -67,6 +73,8 @@ class Application extends BaseApplication
 
         // Load more plugins here
         $this->addPlugin('Migrations');
+        // Tambahkan plugin Authentication jika belum
+        $this->addPlugin('Authentication');
     }
 
     /**
@@ -106,7 +114,10 @@ class Application extends BaseApplication
                     // Kondisi untuk menonaktifkan CSRF
                     return true;  // Ini akan menonaktifkan CSRF untuk semua request
                 }
-            ]));
+            ]))
+
+            // Tambahkan middleware autentikasi
+            ->add(new AuthenticationMiddleware($this));;
 
         return $middlewareQueue;
     }
@@ -134,5 +145,38 @@ class Application extends BaseApplication
         $this->addPlugin('Migrations');
 
         // Load more plugins here
+    }
+
+    // add function getAuthenticationService
+    public function getAuthenticationService(ServerRequestInterface $request): AuthenticationServiceInterface
+    {
+        $authenticationService = new AuthenticationService([
+            'unauthenticatedRedirect' => '/employees/login',
+            'queryParam' => 'redirect',
+        ]);
+
+        // Konfigurasi autentikasi untuk username dan email
+        $authenticationService->loadIdentifier('Authentication.Password', [
+            'fields' => [
+                'username' => 'username',
+                'password' => 'password',
+            ],
+            'resolver' => [
+                'className' => 'Authentication.Orm',
+                'userModel' => 'Employees', // Menentukan tabel employees
+                'finder' => 'auth' // Menggunakan finder custom untuk query username atau email
+            ]
+        ]);
+
+        $authenticationService->loadAuthenticator('Authentication.Session');
+        $authenticationService->loadAuthenticator('Authentication.Form', [
+            'fields' => [
+                'username' => 'username',
+                'password' => 'password',
+            ],
+            'loginUrl' => '/employees/login',
+        ]);
+
+        return $authenticationService;
     }
 }
