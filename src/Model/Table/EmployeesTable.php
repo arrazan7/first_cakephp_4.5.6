@@ -58,6 +58,33 @@ class EmployeesTable extends Table
             'foreignKey' => 'modified_by',
         ]);
 
+        $this->hasMany('Suppliers', [
+            'className' => 'Suppliers',
+            'foreignKey' => 'created_by',
+        ]);
+        $this->hasMany('Suppliers', [
+            'className' => 'Suppliers',
+            'foreignKey' => 'modified_by',
+        ]);
+
+        $this->hasMany('Purchases', [
+            'className' => 'Purchases',
+            'foreignKey' => 'created_by',
+        ]);
+        $this->hasMany('Purchases', [
+            'className' => 'Purchases',
+            'foreignKey' => 'modified_by',
+        ]);
+
+        $this->hasMany('Stocks', [
+            'className' => 'Stocks',
+            'foreignKey' => 'created_by',
+        ]);
+        $this->hasMany('Stocks', [
+            'className' => 'Stocks',
+            'foreignKey' => 'modified_by',
+        ]);
+
         $this->hasMany('PurchaseTransactions', [
             'foreignKey' => 'created_by',
         ]);
@@ -69,6 +96,24 @@ class EmployeesTable extends Table
             'foreignKey' => 'created_by',
         ]);
         $this->hasMany('SaleTransactions', [
+            'foreignKey' => 'modified_by',
+        ]);
+
+        $this->hasMany('PurchasePayments', [
+            'className' => 'PurchasePayments',
+            'foreignKey' => 'created_by',
+        ]);
+        $this->hasMany('PurchasePayments', [
+            'className' => 'PurchasePayments',
+            'foreignKey' => 'modified_by',
+        ]);
+
+        $this->hasMany('SalePayments', [
+            'className' => 'SalePayments',
+            'foreignKey' => 'created_by',
+        ]);
+        $this->hasMany('SalePayments', [
+            'className' => 'SalePayments',
             'foreignKey' => 'modified_by',
         ]);
 

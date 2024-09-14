@@ -58,6 +58,17 @@ class SaleTransactionsTable extends Table
             'foreignKey' => 'modified_by',
             'joinType' => 'INNER',
         ]);
+        $this->belongsTo('CreatedByEmployee', [
+            'className' => 'Employees',
+            'foreignKey' => 'created_by',
+            'joinType' => 'INNER',
+        ]);
+        $this->belongsTo('ModifiedByEmployee', [
+            'className' => 'Employees',
+            'foreignKey' => 'modified_by',
+            'joinType' => 'INNER',
+        ]);
+
         $this->belongsTo('Customers', [
             'foreignKey' => 'customer_id',
             'joinType' => 'INNER',
@@ -109,10 +120,12 @@ class SaleTransactionsTable extends Table
 
         $validator
             ->integer('created_by')
+            ->requirePresence('created_by', 'create')
             ->notEmptyString('created_by');
 
         $validator
             ->integer('modified_by')
+            ->requirePresence('modified_by', 'update')
             ->notEmptyString('modified_by');
 
         return $validator;

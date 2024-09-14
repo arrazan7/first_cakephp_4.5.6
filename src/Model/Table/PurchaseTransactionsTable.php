@@ -58,6 +58,17 @@ class PurchaseTransactionsTable extends Table
             'foreignKey' => 'modified_by',
             'joinType' => 'INNER',
         ]);
+        $this->belongsTo('CreatedByEmployee', [
+            'className' => 'Employees',
+            'foreignKey' => 'created_by',
+            'joinType' => 'INNER',
+        ]);
+        $this->belongsTo('ModifiedByEmployee', [
+            'className' => 'Employees',
+            'foreignKey' => 'modified_by',
+            'joinType' => 'INNER',
+        ]);
+
         $this->belongsTo('Purchases', [
             'foreignKey' => 'purchase_id',
             'joinType' => 'INNER',
@@ -116,10 +127,12 @@ class PurchaseTransactionsTable extends Table
 
         $validator
             ->integer('created_by')
+            ->requirePresence('created_by', 'create')
             ->notEmptyString('created_by');
 
         $validator
             ->integer('modified_by')
+            ->requirePresence('modified_by', 'update')
             ->notEmptyString('modified_by');
 
         return $validator;

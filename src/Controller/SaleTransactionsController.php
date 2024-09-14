@@ -102,9 +102,33 @@ class SaleTransactionsController extends AppController
      */
     public function add()
     {
+        $this->loadComponent('Code'); // Load komponen
+
         $saleTransaction = $this->SaleTransactions->newEmptyEntity();
         if ($this->request->is('post')) {
             $saleTransaction = $this->SaleTransactions->patchEntity($saleTransaction, $this->request->getData());
+
+            // Panggil komponen untuk generate code berdasarkan transaction_date
+            $transactionDate = $saleTransaction->transaction_date;
+            $saleTransaction->code = $this->Code->generateCodeSLTS($transactionDate);
+
+            $session = $this->getRequest()->getSession();
+            // Memeriksa keberadaan data authentikasi ID Employee di session
+            if ($session->check('Auth.id')) {
+                // Data Session tersedia
+                $employeeId = $session->read('Auth.id');
+                $saleTransaction->created_by = $employeeId;
+                $saleTransaction->modified_by = $employeeId;
+            } else {
+                // Data Session tidak tersedia
+                $this->Flash->error(__('Your session has expired. Please log in again.'));
+                return $this->redirect([
+                    'controller' => 'Employees',
+                    'action' => 'login',
+                    'login'
+                ]);
+            }
+
             if ($this->SaleTransactions->save($saleTransaction)) {
                 $this->Flash->success(__('The sale transaction has been saved.'));
 
@@ -136,11 +160,37 @@ class SaleTransactionsController extends AppController
      */
     public function edit($id = null)
     {
+        $this->loadComponent('TransactionCode'); // Load komponen
+
         $saleTransaction = $this->SaleTransactions->get($id, [
             'contain' => [],
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $saleTransaction = $this->SaleTransactions->patchEntity($saleTransaction, $this->request->getData());
+
+            // Periksa jika transaction_date berubah, update kode transaksi
+            $transactionDate = $saleTransaction->transaction_date;
+            $saleTransaction->code = $this->Code->generateCodeSLTS($transactionDate);
+
+            $session = $this->getRequest()->getSession();
+            // Memeriksa keberadaan data authentikasi ID Employee di session
+            if ($session->check('Auth.id')) {
+                // Data Session tersedia
+                $employeeId = $session->read('Auth.id');
+                $saleTransaction->modified_by = $employeeId;
+            } else {
+                // Data Session tidak tersedia
+                $this->Flash->error(__('Your session has expired. Please log in again.'));
+                return $this->redirect([
+                    'controller' => 'Employees',
+                    'action' => 'login',
+                    'login'
+                ]);
+            }
+
+            // Cegah perubahan pada field created_by
+            unset($saleTransaction->created_by);
+
             if ($this->SaleTransactions->save($saleTransaction)) {
                 $this->Flash->success(__('The sale transaction has been saved.'));
 

@@ -45,6 +45,8 @@ class SaleTransaction extends Entity
         'transaction_date' => true,
         'created' => true,
         'modified' => true,
+        'created_by' => true,
+        'modified_by' => true,
         'employee' => true,
         'customer' => true,
         'stock' => true,

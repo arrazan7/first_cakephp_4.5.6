@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Entity;
@@ -36,6 +37,8 @@ class Supplier extends Entity
         'address' => true,
         'created' => true,
         'modified' => true,
+        'created_by' => true,
+        'modified_by' => true,
         'purchases' => true,
     ];
 }

@@ -17,7 +17,7 @@
     </aside>
     <div class="column-responsive column-80">
         <div class="saleTransactions view content">
-            <h3><?= h($saleTransaction->payment_method) ?></h3>
+            <h3><?= h($saleTransaction->code) ?></h3>
             <table>
                 <tr>
                     <th><?= __('Employee') ?></th>
@@ -34,6 +34,10 @@
                 <tr>
                     <th><?= __('Id') ?></th>
                     <td><?= $this->Number->format($saleTransaction->id) ?></td>
+                </tr>
+                <tr>
+                    <th><?= __('Code') ?></th>
+                    <td><?= h($saleTransaction->code) ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Price') ?></th>
@@ -67,6 +71,20 @@
                     <th><?= __('Modified') ?></th>
                     <td><?= h($saleTransaction->modified) ?></td>
                 </tr>
+                <tr>
+                    <th><?= __('Created By') ?></th>
+                    <td>
+                        <?= $saleTransaction->has('created_by_employee') ?
+                            $this->Html->link($saleTransaction->created_by_employee->fullname, ['controller' => 'Employees', 'action' => 'view', $saleTransaction->created_by]) : '' ?>
+                    </td>
+                </tr>
+                <tr>
+                    <th><?= __('Modified By') ?></th>
+                    <td>
+                        <?= $saleTransaction->has('modified_by_employee') ?
+                            $this->Html->link($saleTransaction->modified_by_employee->fullname, ['controller' => 'Employees', 'action' => 'view', $saleTransaction->modified_by]) : '' ?>
+                    </td>
+                </tr>
             </table>
             <div class="related">
                 <h4><?= __('Related Sale Payments') ?></h4>
@@ -83,6 +101,8 @@
                                 <th><?= __('Proof') ?></th>
                                 <th><?= __('Created') ?></th>
                                 <th><?= __('Modified') ?></th>
+                                <th><?= __('Created_By') ?></th>
+                                <th><?= __('Modified_By') ?></th>
                                 <th class="actions"><?= __('Actions') ?></th>
                             </tr>
                             <?php foreach ($saleTransaction->sale_payments as $salePayments) : ?>

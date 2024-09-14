@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Stock $stock
@@ -58,54 +59,70 @@
                     <th><?= __('Modified') ?></th>
                     <td><?= h($stock->modified) ?></td>
                 </tr>
+                <tr>
+                    <th><?= __('Created By') ?></th>
+                    <td>
+                        <?= $stock->has('created_by_employee') ?
+                            $this->Html->link($stock->created_by_employee->fullname, ['controller' => 'Employees', 'action' => 'view', $stock->created_by]) : '' ?>
+                    </td>
+                </tr>
+                <tr>
+                    <th><?= __('Modified By') ?></th>
+                    <td>
+                        <?= $stock->has('modified_by_employee') ?
+                            $this->Html->link($stock->modified_by_employee->fullname, ['controller' => 'Employees', 'action' => 'view', $stock->modified_by]) : '' ?>
+                    </td>
+                </tr>
             </table>
             <div class="related">
                 <h4><?= __('Related Sale Transactions') ?></h4>
                 <?php if (!empty($stock->sale_transactions)) : ?>
-                <div class="table-responsive">
-                    <table>
-                        <tr>
-                            <th><?= __('Id') ?></th>
-                            <th><?= __('Employee Id') ?></th>
-                            <th><?= __('Customer Id') ?></th>
-                            <th><?= __('Stock Id') ?></th>
-                            <th><?= __('Price') ?></th>
-                            <th><?= __('Quantity') ?></th>
-                            <th><?= __('Total Price') ?></th>
-                            <th><?= __('Transaction Date') ?></th>
-                            <th><?= __('Payment Method') ?></th>
-                            <th><?= __('Status') ?></th>
-                            <th><?= __('Payment Date') ?></th>
-                            <th><?= __('Proof') ?></th>
-                            <th><?= __('Created') ?></th>
-                            <th><?= __('Modified') ?></th>
-                            <th class="actions"><?= __('Actions') ?></th>
-                        </tr>
-                        <?php foreach ($stock->sale_transactions as $saleTransactions) : ?>
-                        <tr>
-                            <td><?= h($saleTransactions->id) ?></td>
-                            <td><?= h($saleTransactions->employee_id) ?></td>
-                            <td><?= h($saleTransactions->customer_id) ?></td>
-                            <td><?= h($saleTransactions->stock_id) ?></td>
-                            <td><?= h($saleTransactions->price) ?></td>
-                            <td><?= h($saleTransactions->quantity) ?></td>
-                            <td><?= h($saleTransactions->total_price) ?></td>
-                            <td><?= h($saleTransactions->transaction_date) ?></td>
-                            <td><?= h($saleTransactions->payment_method) ?></td>
-                            <td><?= h($saleTransactions->status) ?></td>
-                            <td><?= h($saleTransactions->payment_date) ?></td>
-                            <td><?= h($saleTransactions->proof) ?></td>
-                            <td><?= h($saleTransactions->created) ?></td>
-                            <td><?= h($saleTransactions->modified) ?></td>
-                            <td class="actions">
-                                <?= $this->Html->link(__('View'), ['controller' => 'SaleTransactions', 'action' => 'view', $saleTransactions->id]) ?>
-                                <?= $this->Html->link(__('Edit'), ['controller' => 'SaleTransactions', 'action' => 'edit', $saleTransactions->id]) ?>
-                                <?= $this->Form->postLink(__('Delete'), ['controller' => 'SaleTransactions', 'action' => 'delete', $saleTransactions->id], ['confirm' => __('Are you sure you want to delete # {0}?', $saleTransactions->id)]) ?>
-                            </td>
-                        </tr>
-                        <?php endforeach; ?>
-                    </table>
-                </div>
+                    <div class="table-responsive">
+                        <table>
+                            <tr>
+                                <th><?= __('Id') ?></th>
+                                <th><?= __('Employee Id') ?></th>
+                                <th><?= __('Customer Id') ?></th>
+                                <th><?= __('Stock Id') ?></th>
+                                <th><?= __('Price') ?></th>
+                                <th><?= __('Quantity') ?></th>
+                                <th><?= __('Total Price') ?></th>
+                                <th><?= __('Transaction Date') ?></th>
+                                <th><?= __('Payment Method') ?></th>
+                                <th><?= __('Status') ?></th>
+                                <th><?= __('Payment Date') ?></th>
+                                <th><?= __('Proof') ?></th>
+                                <th><?= __('Created') ?></th>
+                                <th><?= __('Modified') ?></th>
+                                <th><?= __('Created_By') ?></th>
+                                <th><?= __('Modified_By') ?></th>
+                                <th class="actions"><?= __('Actions') ?></th>
+                            </tr>
+                            <?php foreach ($stock->sale_transactions as $saleTransactions) : ?>
+                                <tr>
+                                    <td><?= h($saleTransactions->id) ?></td>
+                                    <td><?= h($saleTransactions->employee_id) ?></td>
+                                    <td><?= h($saleTransactions->customer_id) ?></td>
+                                    <td><?= h($saleTransactions->stock_id) ?></td>
+                                    <td><?= h($saleTransactions->price) ?></td>
+                                    <td><?= h($saleTransactions->quantity) ?></td>
+                                    <td><?= h($saleTransactions->total_price) ?></td>
+                                    <td><?= h($saleTransactions->transaction_date) ?></td>
+                                    <td><?= h($saleTransactions->payment_method) ?></td>
+                                    <td><?= h($saleTransactions->status) ?></td>
+                                    <td><?= h($saleTransactions->payment_date) ?></td>
+                                    <td><?= h($saleTransactions->proof) ?></td>
+                                    <td><?= h($saleTransactions->created) ?></td>
+                                    <td><?= h($saleTransactions->modified) ?></td>
+                                    <td class="actions">
+                                        <?= $this->Html->link(__('View'), ['controller' => 'SaleTransactions', 'action' => 'view', $saleTransactions->id]) ?>
+                                        <?= $this->Html->link(__('Edit'), ['controller' => 'SaleTransactions', 'action' => 'edit', $saleTransactions->id]) ?>
+                                        <?= $this->Form->postLink(__('Delete'), ['controller' => 'SaleTransactions', 'action' => 'delete', $saleTransactions->id], ['confirm' => __('Are you sure you want to delete # {0}?', $saleTransactions->id)]) ?>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </table>
+                    </div>
                 <?php endif; ?>
             </div>
         </div>

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Table;
@@ -47,6 +48,25 @@ class PurchasesTable extends Table
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
+
+        $this->belongsTo('Employees', [
+            'foreignKey' => 'created_by',
+            'joinType' => 'INNER',
+        ]);
+        $this->belongsTo('Employees', [
+            'foreignKey' => 'modified_by',
+            'joinType' => 'INNER',
+        ]);
+        $this->belongsTo('CreatedByEmployee', [
+            'className' => 'Employees',
+            'foreignKey' => 'created_by',
+            'joinType' => 'INNER',
+        ]);
+        $this->belongsTo('ModifiedByEmployee', [
+            'className' => 'Employees',
+            'foreignKey' => 'modified_by',
+            'joinType' => 'INNER',
+        ]);
 
         $this->belongsTo('Suppliers', [
             'foreignKey' => 'supplier_id',
@@ -103,6 +123,16 @@ class PurchasesTable extends Table
             ->integer('price')
             ->requirePresence('price', 'create')
             ->notEmptyString('price');
+
+        $validator
+            ->integer('created_by')
+            ->requirePresence('created_by', 'create')
+            ->notEmptyString('created_by');
+
+        $validator
+            ->integer('modified_by')
+            ->requirePresence('modified_by', 'update')
+            ->notEmptyString('modified_by');
 
         return $validator;
     }

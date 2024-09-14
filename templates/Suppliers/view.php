@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Supplier $supplier
@@ -42,6 +43,20 @@
                     <th><?= __('Modified') ?></th>
                     <td><?= h($supplier->modified) ?></td>
                 </tr>
+                <tr>
+                    <th><?= __('Created By') ?></th>
+                    <td>
+                        <?= $supplier->has('created_by_employee') ?
+                            $this->Html->link($supplier->created_by_employee->fullname, ['controller' => 'Employees', 'action' => 'view', $supplier->created_by]) : '' ?>
+                    </td>
+                </tr>
+                <tr>
+                    <th><?= __('Modified By') ?></th>
+                    <td>
+                        <?= $supplier->has('modified_by_employee') ?
+                            $this->Html->link($supplier->modified_by_employee->fullname, ['controller' => 'Employees', 'action' => 'view', $supplier->modified_by]) : '' ?>
+                    </td>
+                </tr>
             </table>
             <div class="text">
                 <strong><?= __('Address') ?></strong>
@@ -52,42 +67,44 @@
             <div class="related">
                 <h4><?= __('Related Purchases') ?></h4>
                 <?php if (!empty($supplier->purchases)) : ?>
-                <div class="table-responsive">
-                    <table>
-                        <tr>
-                            <th><?= __('Id') ?></th>
-                            <th><?= __('Supplier Id') ?></th>
-                            <th><?= __('Merk') ?></th>
-                            <th><?= __('Model') ?></th>
-                            <th><?= __('Engine Capacity') ?></th>
-                            <th><?= __('Color') ?></th>
-                            <th><?= __('Production Year') ?></th>
-                            <th><?= __('Price') ?></th>
-                            <th><?= __('Created') ?></th>
-                            <th><?= __('Modified') ?></th>
-                            <th class="actions"><?= __('Actions') ?></th>
-                        </tr>
-                        <?php foreach ($supplier->purchases as $purchases) : ?>
-                        <tr>
-                            <td><?= h($purchases->id) ?></td>
-                            <td><?= h($purchases->supplier_id) ?></td>
-                            <td><?= h($purchases->merk) ?></td>
-                            <td><?= h($purchases->model) ?></td>
-                            <td><?= h($purchases->engine_capacity) ?></td>
-                            <td><?= h($purchases->color) ?></td>
-                            <td><?= h($purchases->production_year) ?></td>
-                            <td><?= h($purchases->price) ?></td>
-                            <td><?= h($purchases->created) ?></td>
-                            <td><?= h($purchases->modified) ?></td>
-                            <td class="actions">
-                                <?= $this->Html->link(__('View'), ['controller' => 'Purchases', 'action' => 'view', $purchases->id]) ?>
-                                <?= $this->Html->link(__('Edit'), ['controller' => 'Purchases', 'action' => 'edit', $purchases->id]) ?>
-                                <?= $this->Form->postLink(__('Delete'), ['controller' => 'Purchases', 'action' => 'delete', $purchases->id], ['confirm' => __('Are you sure you want to delete # {0}?', $purchases->id)]) ?>
-                            </td>
-                        </tr>
-                        <?php endforeach; ?>
-                    </table>
-                </div>
+                    <div class="table-responsive">
+                        <table>
+                            <tr>
+                                <th><?= __('Id') ?></th>
+                                <th><?= __('Supplier Id') ?></th>
+                                <th><?= __('Merk') ?></th>
+                                <th><?= __('Model') ?></th>
+                                <th><?= __('Engine Capacity') ?></th>
+                                <th><?= __('Color') ?></th>
+                                <th><?= __('Production Year') ?></th>
+                                <th><?= __('Price') ?></th>
+                                <th><?= __('Created') ?></th>
+                                <th><?= __('Modified') ?></th>
+                                <th><?= __('Created_By') ?></th>
+                                <th><?= __('Modified_By') ?></th>
+                                <th class="actions"><?= __('Actions') ?></th>
+                            </tr>
+                            <?php foreach ($supplier->purchases as $purchases) : ?>
+                                <tr>
+                                    <td><?= h($purchases->id) ?></td>
+                                    <td><?= h($purchases->supplier_id) ?></td>
+                                    <td><?= h($purchases->merk) ?></td>
+                                    <td><?= h($purchases->model) ?></td>
+                                    <td><?= h($purchases->engine_capacity) ?></td>
+                                    <td><?= h($purchases->color) ?></td>
+                                    <td><?= h($purchases->production_year) ?></td>
+                                    <td><?= h($purchases->price) ?></td>
+                                    <td><?= h($purchases->created) ?></td>
+                                    <td><?= h($purchases->modified) ?></td>
+                                    <td class="actions">
+                                        <?= $this->Html->link(__('View'), ['controller' => 'Purchases', 'action' => 'view', $purchases->id]) ?>
+                                        <?= $this->Html->link(__('Edit'), ['controller' => 'Purchases', 'action' => 'edit', $purchases->id]) ?>
+                                        <?= $this->Form->postLink(__('Delete'), ['controller' => 'Purchases', 'action' => 'delete', $purchases->id], ['confirm' => __('Are you sure you want to delete # {0}?', $purchases->id)]) ?>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </table>
+                    </div>
                 <?php endif; ?>
             </div>
         </div>

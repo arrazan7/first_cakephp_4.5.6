@@ -102,6 +102,88 @@
                 <?php endif; ?>
             </div>
             <div class="related">
+                <h4><?= __('Related Suppliers') ?></h4>
+                <?php if (!empty($employee->suppliers)) : ?>
+                    <div class="table-responsive">
+                        <table>
+                            <tr>
+                                <th><?= __('Id') ?></th>
+                                <th><?= __('Name') ?></th>
+                                <th><?= __('Phone') ?></th>
+                                <th><?= __('Email') ?></th>
+                                <th><?= __('Created') ?></th>
+                                <th><?= __('Modified') ?></th>
+                                <th><?= __('Created_By') ?></th>
+                                <th><?= __('Modified_By') ?></th>
+                                <th class="actions"><?= __('Actions') ?></th>
+                            </tr>
+                            <?php foreach ($employee->suppliers as $suppliers) : ?>
+                                <tr>
+                                    <td><?= h($suppliers->id) ?></td>
+                                    <td><?= h($suppliers->name) ?></td>
+                                    <td><?= h($suppliers->phone) ?></td>
+                                    <td><?= h($suppliers->email) ?></td>
+                                    <td><?= h($suppliers->created) ?></td>
+                                    <td><?= h($suppliers->modified) ?></td>
+                                    <td><?= h($suppliers->created_by) ?></td>
+                                    <td><?= h($suppliers->modified_by) ?></td>
+                                    <td class="actions">
+                                        <?= $this->Html->link(__('View'), ['controller' => 'Suppliers', 'action' => 'view', $suppliers->id]) ?>
+                                        <?= $this->Html->link(__('Edit'), ['controller' => 'Suppliers', 'action' => 'edit', $suppliers->id]) ?>
+                                        <?= $this->Form->postLink(__('Delete'), ['controller' => 'Suppliers', 'action' => 'delete', $suppliers->id], ['confirm' => __('Are you sure you want to delete # {0}?', $suppliers->id)]) ?>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </table>
+                    </div>
+                <?php endif; ?>
+            </div>
+            <div class="related">
+                <h4><?= __('Related Stocks') ?></h4>
+                <?php if (!empty($employee->stocks)) : ?>
+                    <div class="table-responsive">
+                        <table>
+                            <tr>
+                                <th><?= __('Id') ?></th>
+                                <th><?= __('Merk') ?></th>
+                                <th><?= __('Model') ?></th>
+                                <th><?= __('Engine Capacity') ?></th>
+                                <th><?= __('Color') ?></th>
+                                <th><?= __('Production Year') ?></th>
+                                <th><?= __('Price') ?></th>
+                                <th><?= __('Quantity') ?></th>
+                                <th><?= __('Created') ?></th>
+                                <th><?= __('Modified') ?></th>
+                                <th><?= __('Created_By') ?></th>
+                                <th><?= __('Modified_By') ?></th>
+                                <th class="actions"><?= __('Actions') ?></th>
+                            </tr>
+                            <?php foreach ($employee->stocks as $stocks) : ?>
+                                <tr>
+                                    <td><?= h($stocks->id) ?></td>
+                                    <td><?= h($stocks->merk) ?></td>
+                                    <td><?= h($stocks->model) ?></td>
+                                    <td><?= h($stocks->engine_capacity) ?></td>
+                                    <td><?= h($stocks->color) ?></td>
+                                    <td><?= h($stocks->production_year) ?></td>
+                                    <td><?= h($stocks->price) ?></td>
+                                    <td><?= h($stocks->quantity) ?></td>
+                                    <td><?= h($stocks->created) ?></td>
+                                    <td><?= h($stocks->modified) ?></td>
+                                    <td><?= h($stocks->created_by) ?></td>
+                                    <td><?= h($stocks->modified_by) ?></td>
+                                    <td class="actions">
+                                        <?= $this->Html->link(__('View'), ['controller' => 'Stocks', 'action' => 'view', $stocks->id]) ?>
+                                        <?= $this->Html->link(__('Edit'), ['controller' => 'Stocks', 'action' => 'edit', $stocks->id]) ?>
+                                        <?= $this->Form->postLink(__('Delete'), ['controller' => 'Stocks', 'action' => 'delete', $stocks->id], ['confirm' => __('Are you sure you want to delete # {0}?', $stocks->id)]) ?>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </table>
+                    </div>
+                <?php endif; ?>
+            </div>
+            <div class="related">
                 <h4><?= __('Related Purchase Transactions') ?></h4>
                 <?php if (!empty($employee->purchase_transactions)) : ?>
                     <div class="table-responsive">
@@ -151,6 +233,7 @@
                         <table>
                             <tr>
                                 <th><?= __('Id') ?></th>
+                                <th><?= __('Code') ?></th>
                                 <th><?= __('Customer Id') ?></th>
                                 <th><?= __('Stock Id') ?></th>
                                 <th><?= __('Price') ?></th>
@@ -166,6 +249,7 @@
                             <?php foreach ($employee->sale_transactions as $saleTransactions) : ?>
                                 <tr>
                                     <td><?= h($saleTransactions->id) ?></td>
+                                    <td><?= h($saleTransactions->code) ?></td>
                                     <td><?= h($saleTransactions->customer_id) ?></td>
                                     <td><?= h($saleTransactions->stock_id) ?></td>
                                     <td><?= h($saleTransactions->price) ?></td>
@@ -180,6 +264,92 @@
                                         <?= $this->Html->link(__('View'), ['controller' => 'SaleTransactions', 'action' => 'view', $saleTransactions->id]) ?>
                                         <?= $this->Html->link(__('Edit'), ['controller' => 'SaleTransactions', 'action' => 'edit', $saleTransactions->id]) ?>
                                         <?= $this->Form->postLink(__('Delete'), ['controller' => 'SaleTransactions', 'action' => 'delete', $saleTransactions->id], ['confirm' => __('Are you sure you want to delete # {0}?', $saleTransactions->id)]) ?>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </table>
+                    </div>
+                <?php endif; ?>
+            </div>
+            <div class="related">
+                <h4><?= __('Related Purchase Payments') ?></h4>
+                <?php if (!empty($employee->purchase_payments)) : ?>
+                    <div class="table-responsive">
+                        <table>
+                            <tr>
+                                <th><?= __('Id') ?></th>
+                                <th><?= __('Purchase Transaction') ?></th>
+                                <th><?= __('Payment Method') ?></th>
+                                <th><?= __('Status') ?></th>
+                                <th><?= __('Proof') ?></th>
+                                <th><?= __('Nominal') ?></th>
+                                <th><?= __('Payment Date') ?></th>
+                                <th><?= __('Created') ?></th>
+                                <th><?= __('Modified') ?></th>
+                                <th><?= __('Created_By') ?></th>
+                                <th><?= __('Modified_By') ?></th>
+                                <th class="actions"><?= __('Actions') ?></th>
+                            </tr>
+                            <?php foreach ($employee->purchase_payments as $purchase_payments) : ?>
+                                <tr>
+                                    <td><?= h($purchase_payments->id) ?></td>
+                                    <td><?= h($purchase_payments->purchase_transaction_id) ?></td>
+                                    <td><?= h($purchase_payments->payment_method) ?></td>
+                                    <td><?= h($purchase_payments->status) ?></td>
+                                    <td><?= h($purchase_payments->proof) ?></td>
+                                    <td><?= h($purchase_payments->nominal) ?></td>
+                                    <td><?= h($purchase_payments->payment_date) ?></td>
+                                    <td><?= h($purchase_payments->created) ?></td>
+                                    <td><?= h($purchase_payments->modified) ?></td>
+                                    <td><?= h($purchase_payments->created_by) ?></td>
+                                    <td><?= h($purchase_payments->modified_by) ?></td>
+                                    <td class="actions">
+                                        <?= $this->Html->link(__('View'), ['controller' => 'PurchasePayments', 'action' => 'view', $purchase_payments->id]) ?>
+                                        <?= $this->Html->link(__('Edit'), ['controller' => 'PurchasePayments', 'action' => 'edit', $purchase_payments->id]) ?>
+                                        <?= $this->Form->postLink(__('Delete'), ['controller' => 'PurchasePayments', 'action' => 'delete', $purchase_payments->id], ['confirm' => __('Are you sure you want to delete # {0}?', $purchase_payments->id)]) ?>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </table>
+                    </div>
+                <?php endif; ?>
+            </div>
+            <div class="related">
+                <h4><?= __('Related Sale Payments') ?></h4>
+                <?php if (!empty($employee->sale_payments)) : ?>
+                    <div class="table-responsive">
+                        <table>
+                            <tr>
+                                <th><?= __('Id') ?></th>
+                                <th><?= __('sale Transaction') ?></th>
+                                <th><?= __('Payment Method') ?></th>
+                                <th><?= __('Status') ?></th>
+                                <th><?= __('Proof') ?></th>
+                                <th><?= __('Nominal') ?></th>
+                                <th><?= __('Payment Date') ?></th>
+                                <th><?= __('Created') ?></th>
+                                <th><?= __('Modified') ?></th>
+                                <th><?= __('Created_By') ?></th>
+                                <th><?= __('Modified_By') ?></th>
+                                <th class="actions"><?= __('Actions') ?></th>
+                            </tr>
+                            <?php foreach ($employee->sale_payments as $sale_payments) : ?>
+                                <tr>
+                                    <td><?= h($sale_payments->id) ?></td>
+                                    <td><?= h($sale_payments->sale_transaction_id) ?></td>
+                                    <td><?= h($sale_payments->payment_method) ?></td>
+                                    <td><?= h($sale_payments->status) ?></td>
+                                    <td><?= h($sale_payments->proof) ?></td>
+                                    <td><?= h($sale_payments->nominal) ?></td>
+                                    <td><?= h($sale_payments->payment_date) ?></td>
+                                    <td><?= h($sale_payments->created) ?></td>
+                                    <td><?= h($sale_payments->modified) ?></td>
+                                    <td><?= h($sale_payments->created_by) ?></td>
+                                    <td><?= h($sale_payments->modified_by) ?></td>
+                                    <td class="actions">
+                                        <?= $this->Html->link(__('View'), ['controller' => 'SalePayments', 'action' => 'view', $sale_payments->id]) ?>
+                                        <?= $this->Html->link(__('Edit'), ['controller' => 'SalePayments', 'action' => 'edit', $sale_payments->id]) ?>
+                                        <?= $this->Form->postLink(__('Delete'), ['controller' => 'SalePayments', 'action' => 'delete', $sale_payments->id], ['confirm' => __('Are you sure you want to delete # {0}?', $sale_payments->id)]) ?>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

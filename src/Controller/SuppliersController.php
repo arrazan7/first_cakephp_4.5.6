@@ -72,6 +72,24 @@ class SuppliersController extends AppController
         $supplier = $this->Suppliers->newEmptyEntity();
         if ($this->request->is('post')) {
             $supplier = $this->Suppliers->patchEntity($supplier, $this->request->getData());
+
+            $session = $this->getRequest()->getSession();
+            // Memeriksa keberadaan data authentikasi ID Employee di session
+            if ($session->check('Auth.id')) {
+                // Data Session tersedia
+                $employeeId = $session->read('Auth.id');
+                $supplier->created_by = $employeeId;
+                $supplier->modified_by = $employeeId;
+            } else {
+                // Data Session tidak tersedia
+                $this->Flash->error(__('Your session has expired. Please log in again.'));
+                return $this->redirect([
+                    'controller' => 'Employees',
+                    'action' => 'login',
+                    'login'
+                ]);
+            }
+
             if ($this->Suppliers->save($supplier)) {
                 $this->Flash->success(__('The supplier has been saved.'));
 
@@ -96,6 +114,26 @@ class SuppliersController extends AppController
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $supplier = $this->Suppliers->patchEntity($supplier, $this->request->getData());
+
+            $session = $this->getRequest()->getSession();
+            // Memeriksa keberadaan data authentikasi ID Employee di session
+            if ($session->check('Auth.id')) {
+                // Data Session tersedia
+                $employeeId = $session->read('Auth.id');
+                $supplier->modified_by = $employeeId;
+            } else {
+                // Data Session tidak tersedia
+                $this->Flash->error(__('Your session has expired. Please log in again.'));
+                return $this->redirect([
+                    'controller' => 'Employees',
+                    'action' => 'login',
+                    'login'
+                ]);
+            }
+
+            // Cegah perubahan pada field created_by
+            unset($supplier->created_by);
+
             if ($this->Suppliers->save($supplier)) {
                 $this->Flash->success(__('The supplier has been saved.'));
 

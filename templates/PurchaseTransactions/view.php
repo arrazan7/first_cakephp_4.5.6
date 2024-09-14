@@ -17,7 +17,7 @@
     </aside>
     <div class="column-responsive column-80">
         <div class="purchaseTransactions view content">
-            <h3><?= h($purchaseTransaction->payment_method) ?></h3>
+            <h3><?= h($purchaseTransaction->code) ?></h3>
             <table>
                 <tr>
                     <th><?= __('Employee') ?></th>
@@ -59,6 +59,20 @@
                     <th><?= __('Modified') ?></th>
                     <td><?= h($purchaseTransaction->modified) ?></td>
                 </tr>
+                <tr>
+                    <th><?= __('Created By') ?></th>
+                    <td>
+                        <?= $purchaseTransaction->has('created_by_employee') ?
+                            $this->Html->link($purchaseTransaction->created_by_employee->fullname, ['controller' => 'Employees', 'action' => 'view', $purchaseTransaction->created_by]) : '' ?>
+                    </td>
+                </tr>
+                <tr>
+                    <th><?= __('Modified By') ?></th>
+                    <td>
+                        <?= $purchaseTransaction->has('modified_by_employee') ?
+                            $this->Html->link($purchaseTransaction->modified_by_employee->fullname, ['controller' => 'Employees', 'action' => 'view', $purchaseTransaction->modified_by]) : '' ?>
+                    </td>
+                </tr>
             </table>
             <div class="related">
                 <h4><?= __('Related Purchase Payments') ?></h4>
@@ -75,6 +89,8 @@
                                 <th><?= __('Proof') ?></th>
                                 <th><?= __('Created') ?></th>
                                 <th><?= __('Modified') ?></th>
+                                <th><?= __('Created_By') ?></th>
+                                <th><?= __('Modified_By') ?></th>
                                 <th class="actions"><?= __('Actions') ?></th>
                             </tr>
                             <?php foreach ($purchaseTransaction->purchase_payments as $purchasePayments) : ?>

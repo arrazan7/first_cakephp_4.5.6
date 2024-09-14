@@ -43,6 +43,8 @@ class Stock extends Entity
         'quantity' => true,
         'created' => true,
         'modified' => true,
+        'created_by' => true,
+        'modified_by' => true,
         'sale_transactions' => true,
     ];
 

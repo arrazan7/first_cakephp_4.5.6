@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Entity;
@@ -40,6 +41,8 @@ class PurchasePayment extends Entity
         'proof' => true,
         'created' => true,
         'modified' => true,
+        'created_by' => true,
+        'modified_by' => true,
         'purchase_transaction' => true,
     ];
 }

@@ -49,8 +49,13 @@ class Employee extends Entity
         'created' => true,
         'modified' => true,
         'customers' => true,
+        'suppliers' => true,
+        'purchases' => true,
+        'stocks' => true,
         'purchase_transactions' => true,
         'sale_transactions' => true,
+        'purchase_payments' => true,
+        'sale_payments' => true,
     ];
 
     /**

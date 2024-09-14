@@ -44,6 +44,8 @@ class Purchase extends Entity
         'price' => true,
         'created' => true,
         'modified' => true,
+        'created_by' => true,
+        'modified_by' => true,
         'supplier' => true,
         'purchase_transactions' => true,
     ];

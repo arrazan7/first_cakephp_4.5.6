@@ -105,6 +105,24 @@ class PurchasePaymentsController extends AppController
         $purchasePayment = $this->PurchasePayments->newEmptyEntity();
         if ($this->request->is('post')) {
             $purchasePayment = $this->PurchasePayments->patchEntity($purchasePayment, $this->request->getData());
+
+            $session = $this->getRequest()->getSession();
+            // Memeriksa keberadaan data authentikasi ID Employee di session
+            if ($session->check('Auth.id')) {
+                // Data Session tersedia
+                $employeeId = $session->read('Auth.id');
+                $purchasePayment->created_by = $employeeId;
+                $purchasePayment->modified_by = $employeeId;
+            } else {
+                // Data Session tidak tersedia
+                $this->Flash->error(__('Your session has expired. Please log in again.'));
+                return $this->redirect([
+                    'controller' => 'Employees',
+                    'action' => 'login',
+                    'login'
+                ]);
+            }
+
             if ($this->PurchasePayments->save($purchasePayment)) {
                 $this->Flash->success(__('The purchase payment has been saved.'));
 
@@ -133,6 +151,26 @@ class PurchasePaymentsController extends AppController
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $purchasePayment = $this->PurchasePayments->patchEntity($purchasePayment, $this->request->getData());
+
+            $session = $this->getRequest()->getSession();
+            // Memeriksa keberadaan data authentikasi ID Employee di session
+            if ($session->check('Auth.id')) {
+                // Data Session tersedia
+                $employeeId = $session->read('Auth.id');
+                $purchasePayment->modified_by = $employeeId;
+            } else {
+                // Data Session tidak tersedia
+                $this->Flash->error(__('Your session has expired. Please log in again.'));
+                return $this->redirect([
+                    'controller' => 'Employees',
+                    'action' => 'login',
+                    'login'
+                ]);
+            }
+
+            // Cegah perubahan pada field created_by
+            unset($purchasePayment->created_by);
+
             if ($this->PurchasePayments->save($purchasePayment)) {
                 $this->Flash->success(__('The purchase payment has been saved.'));
 

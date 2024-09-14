@@ -55,6 +55,20 @@
                     <th><?= __('Modified') ?></th>
                     <td><?= h($purchasePayment->modified) ?></td>
                 </tr>
+                <tr>
+                    <th><?= __('Created By') ?></th>
+                    <td>
+                        <?= $purchasePayment->has('created_by_employee') ?
+                            $this->Html->link($purchasePayment->created_by_employee->fullname, ['controller' => 'Employees', 'action' => 'view', $purchasePayment->created_by]) : '' ?>
+                    </td>
+                </tr>
+                <tr>
+                    <th><?= __('Modified By') ?></th>
+                    <td>
+                        <?= $purchasePayment->has('modified_by_employee') ?
+                            $this->Html->link($purchasePayment->modified_by_employee->fullname, ['controller' => 'Employees', 'action' => 'view', $purchasePayment->modified_by]) : '' ?>
+                    </td>
+                </tr>
             </table>
         </div>
     </div>

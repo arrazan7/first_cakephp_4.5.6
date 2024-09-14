@@ -75,6 +75,24 @@ class PurchasesController extends AppController
         $purchase = $this->Purchases->newEmptyEntity();
         if ($this->request->is('post')) {
             $purchase = $this->Purchases->patchEntity($purchase, $this->request->getData());
+
+            $session = $this->getRequest()->getSession();
+            // Memeriksa keberadaan data authentikasi ID Employee di session
+            if ($session->check('Auth.id')) {
+                // Data Session tersedia
+                $employeeId = $session->read('Auth.id');
+                $purchase->created_by = $employeeId;
+                $purchase->modified_by = $employeeId;
+            } else {
+                // Data Session tidak tersedia
+                $this->Flash->error(__('Your session has expired. Please log in again.'));
+                return $this->redirect([
+                    'controller' => 'Employees',
+                    'action' => 'login',
+                    'login'
+                ]);
+            }
+
             if ($this->Purchases->save($purchase)) {
                 $this->Flash->success(__('The purchase has been saved.'));
 
@@ -100,6 +118,26 @@ class PurchasesController extends AppController
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $purchase = $this->Purchases->patchEntity($purchase, $this->request->getData());
+
+            $session = $this->getRequest()->getSession();
+            // Memeriksa keberadaan data authentikasi ID Employee di session
+            if ($session->check('Auth.id')) {
+                // Data Session tersedia
+                $employeeId = $session->read('Auth.id');
+                $purchase->modified_by = $employeeId;
+            } else {
+                // Data Session tidak tersedia
+                $this->Flash->error(__('Your session has expired. Please log in again.'));
+                return $this->redirect([
+                    'controller' => 'Employees',
+                    'action' => 'login',
+                    'login'
+                ]);
+            }
+
+            // Cegah perubahan pada field created_by
+            unset($purchase->created_by);
+
             if ($this->Purchases->save($purchase)) {
                 $this->Flash->success(__('The purchase has been saved.'));
 

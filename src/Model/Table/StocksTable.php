@@ -48,6 +48,25 @@ class StocksTable extends Table
 
         $this->addBehavior('Timestamp');
 
+        $this->belongsTo('Employees', [
+            'foreignKey' => 'created_by',
+            'joinType' => 'INNER',
+        ]);
+        $this->belongsTo('Employees', [
+            'foreignKey' => 'modified_by',
+            'joinType' => 'INNER',
+        ]);
+        $this->belongsTo('CreatedByEmployee', [
+            'className' => 'Employees',
+            'foreignKey' => 'created_by',
+            'joinType' => 'INNER',
+        ]);
+        $this->belongsTo('ModifiedByEmployee', [
+            'className' => 'Employees',
+            'foreignKey' => 'modified_by',
+            'joinType' => 'INNER',
+        ]);
+
         $this->hasMany('SaleTransactions', [
             'foreignKey' => 'stock_id',
         ]);
@@ -100,6 +119,16 @@ class StocksTable extends Table
             ->integer('quantity')
             ->requirePresence('quantity', 'create')
             ->notEmptyString('quantity');
+
+        $validator
+            ->integer('created_by')
+            ->requirePresence('created_by', 'create')
+            ->notEmptyString('created_by');
+
+        $validator
+            ->integer('modified_by')
+            ->requirePresence('modified_by', 'update')
+            ->notEmptyString('modified_by');
 
         return $validator;
     }
