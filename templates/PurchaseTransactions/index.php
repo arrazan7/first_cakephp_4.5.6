@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @var \App\View\AppView $this
  * @var iterable<\App\Model\Entity\PurchaseTransaction> $purchaseTransactions
@@ -12,7 +13,6 @@
             <thead>
                 <tr>
                     <th><?= $this->Paginator->sort('id') ?></th>
-                    <th><?= $this->Paginator->sort('employee_id') ?></th>
                     <th><?= $this->Paginator->sort('purchase_id') ?></th>
                     <th><?= $this->Paginator->sort('price') ?></th>
                     <th><?= $this->Paginator->sort('quantity') ?></th>
@@ -25,22 +25,21 @@
             </thead>
             <tbody>
                 <?php foreach ($purchaseTransactions as $purchaseTransaction): ?>
-                <tr>
-                    <td><?= $this->Number->format($purchaseTransaction->id) ?></td>
-                    <td><?= $purchaseTransaction->has('employee') ? $this->Html->link($purchaseTransaction->employee->fullname, ['controller' => 'Employees', 'action' => 'view', $purchaseTransaction->employee->id]) : '' ?></td>
-                    <td><?= $purchaseTransaction->has('purchase') ? $this->Html->link($purchaseTransaction->purchase->merk, ['controller' => 'Purchases', 'action' => 'view', $purchaseTransaction->purchase->id]) : '' ?></td>
-                    <td><?= $this->Number->format($purchaseTransaction->price) ?></td>
-                    <td><?= $this->Number->format($purchaseTransaction->quantity) ?></td>
-                    <td><?= $this->Number->format($purchaseTransaction->total_price) ?></td>
-                    <td><?= h($purchaseTransaction->transaction_date) ?></td>
-                    <td><?= h($purchaseTransaction->created) ?></td>
-                    <td><?= h($purchaseTransaction->modified) ?></td>
-                    <td class="actions">
-                        <?= $this->Html->link(__('View'), ['action' => 'view', $purchaseTransaction->id]) ?>
-                        <?= $this->Html->link(__('Edit'), ['action' => 'edit', $purchaseTransaction->id]) ?>
-                        <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $purchaseTransaction->id], ['confirm' => __('Are you sure you want to delete # {0}?', $purchaseTransaction->id)]) ?>
-                    </td>
-                </tr>
+                    <tr>
+                        <td><?= $this->Number->format($purchaseTransaction->id) ?></td>
+                        <td><?= $purchaseTransaction->has('purchase') ? $this->Html->link($purchaseTransaction->purchase->merk, ['controller' => 'Purchases', 'action' => 'view', $purchaseTransaction->purchase->id]) : '' ?></td>
+                        <td><?= $this->Number->format($purchaseTransaction->price) ?></td>
+                        <td><?= $this->Number->format($purchaseTransaction->quantity) ?></td>
+                        <td><?= $this->Number->format($purchaseTransaction->total_price) ?></td>
+                        <td><?= h($purchaseTransaction->transaction_date) ?></td>
+                        <td><?= h($purchaseTransaction->created) ?></td>
+                        <td><?= h($purchaseTransaction->modified) ?></td>
+                        <td class="actions">
+                            <?= $this->Html->link(__('View'), ['action' => 'view', $purchaseTransaction->id]) ?>
+                            <?= $this->Html->link(__('Edit'), ['action' => 'edit', $purchaseTransaction->id]) ?>
+                            <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $purchaseTransaction->id], ['confirm' => __('Are you sure you want to delete # {0}?', $purchaseTransaction->id)]) ?>
+                        </td>
+                    </tr>
                 <?php endforeach; ?>
             </tbody>
         </table>

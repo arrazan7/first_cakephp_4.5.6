@@ -20,13 +20,6 @@
             <fieldset>
                 <legend><?= __('Add Purchase Transaction') ?></legend>
                 <?php
-                echo $this->Form->control('employee_id', [
-                    'options' => $employees, // Data dari controller
-                    'empty' => 'Pilih Employee',
-                    'label' => 'Employee',
-                    'valueField' => 'id',  // Menggunakan 'id' sebagai value
-                    'textField' => 'full_description'  // Menampilkan full description
-                ]);
                 echo $this->Form->control('purchase_id', [
                     'options' => $purchases, // Data dari controller
                     'empty' => 'Pilih Purchase',

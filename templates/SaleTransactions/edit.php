@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\SaleTransaction $saleTransaction
@@ -25,13 +26,12 @@
             <fieldset>
                 <legend><?= __('Edit Sale Transaction') ?></legend>
                 <?php
-                    echo $this->Form->control('employee_id', ['options' => $employees]);
-                    echo $this->Form->control('customer_id', ['options' => $customers]);
-                    echo $this->Form->control('stock_id', ['options' => $stocks]);
-                    echo $this->Form->control('price');
-                    echo $this->Form->control('quantity');
-                    echo $this->Form->control('total_price');
-                    echo $this->Form->control('transaction_date');
+                echo $this->Form->control('customer_id', ['options' => $customers]);
+                echo $this->Form->control('stock_id', ['options' => $stocks]);
+                echo $this->Form->control('price');
+                echo $this->Form->control('quantity');
+                echo $this->Form->control('total_price');
+                echo $this->Form->control('transaction_date');
                 ?>
             </fieldset>
             <?= $this->Form->button(__('Submit')) ?>

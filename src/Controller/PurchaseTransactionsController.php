@@ -89,7 +89,7 @@ class PurchaseTransactionsController extends AppController
     public function view($id = null)
     {
         $purchaseTransaction = $this->PurchaseTransactions->get($id, [
-            'contain' => ['Employees', 'Purchases', 'PurchasePayments'],
+            'contain' => ['Employees', 'Purchases', 'PurchasePayments', 'CreatedByEmployee', 'ModifiedByEmployee'],
         ]);
 
         $this->set(compact('purchaseTransaction'));
@@ -156,7 +156,7 @@ class PurchaseTransactionsController extends AppController
      */
     public function edit($id = null)
     {
-        $this->loadComponent('TransactionCode'); // Load komponen
+        $this->loadComponent('Code'); // Load komponen
 
         $purchaseTransaction = $this->PurchaseTransactions->get($id, [
             'contain' => [],

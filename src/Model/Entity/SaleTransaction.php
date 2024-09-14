@@ -36,7 +36,6 @@ class SaleTransaction extends Entity
      * @var array<string, bool>
      */
     protected $_accessible = [
-        'employee_id' => true,
         'customer_id' => true,
         'stock_id' => true,
         'price' => true,
@@ -56,6 +55,6 @@ class SaleTransaction extends Entity
 
     protected function _getFullDescription()
     {
-        return 'Employee ID: ' . $this->employee_id . ' | Customer ID: ' . $this->customer_id . ' | Stock ID: ' . $this->stock_id . ' | Price: ' . $this->price . ' | Quantity: ' . $this->quantity . ' | Total Price: ' . $this->total_price . ' | Transaction Date: ' . $this->transaction_date;
+        return 'Employee ID: ' . $this->modified_by . ' | Customer ID: ' . $this->customer_id . ' | Stock ID: ' . $this->stock_id . ' | Price: ' . $this->price . ' | Quantity: ' . $this->quantity . ' | Total Price: ' . $this->total_price . ' | Transaction Date: ' . $this->transaction_date;
     }
 }

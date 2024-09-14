@@ -36,7 +36,6 @@ class PurchaseTransaction extends Entity
      * @var array<string, bool>
      */
     protected $_accessible = [
-        'employee_id' => true,
         'purchase_id' => true,
         'price' => true,
         'quantity' => true,
@@ -51,4 +50,9 @@ class PurchaseTransaction extends Entity
         'purchase' => true,
         'purchase_payments' => true,
     ];
+
+    protected function _getFullDescription()
+    {
+        return 'Employee ID: ' . $this->modified_by . ' | Purchase ID: ' . $this->purchase_id . ' | Price: ' . $this->price . ' | Quantity: ' . $this->quantity . ' | Total Price: ' . $this->total_price . ' | Transaction Date: ' . $this->transaction_date;
+    }
 }

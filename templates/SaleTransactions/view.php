@@ -20,10 +20,6 @@
             <h3><?= h($saleTransaction->code) ?></h3>
             <table>
                 <tr>
-                    <th><?= __('Employee') ?></th>
-                    <td><?= $saleTransaction->has('employee') ? $this->Html->link($saleTransaction->employee->fullname, ['controller' => 'Employees', 'action' => 'view', $saleTransaction->employee->id]) : '' ?></td>
-                </tr>
-                <tr>
                     <th><?= __('Customer') ?></th>
                     <td><?= $saleTransaction->has('customer') ? $this->Html->link($saleTransaction->customer->name, ['controller' => 'Customers', 'action' => 'view', $saleTransaction->customer->id]) : '' ?></td>
                 </tr>

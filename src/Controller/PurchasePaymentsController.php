@@ -89,7 +89,7 @@ class PurchasePaymentsController extends AppController
     public function view($id = null)
     {
         $purchasePayment = $this->PurchasePayments->get($id, [
-            'contain' => ['PurchaseTransactions'],
+            'contain' => ['PurchaseTransactions', 'CreatedByEmployee', 'ModifiedByEmployee'],
         ]);
 
         $this->set(compact('purchasePayment'));

@@ -56,7 +56,7 @@ class StocksController extends AppController
     public function view($id = null)
     {
         $stock = $this->Stocks->get($id, [
-            'contain' => ['SaleTransactions'],
+            'contain' => ['SaleTransactions', 'CreatedByEmployee', 'ModifiedByEmployee'],
         ]);
 
         $this->set(compact('stock'));

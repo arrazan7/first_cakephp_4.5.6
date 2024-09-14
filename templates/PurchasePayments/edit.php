@@ -24,7 +24,13 @@
             <fieldset>
                 <legend><?= __('Edit Purchase Payment') ?></legend>
                 <?php
-                echo $this->Form->control('purchase_transaction_id', ['options' => $purchaseTransactions]);
+                echo $this->Form->control('purchase_transaction_id', [
+                    'options' => $purchaseTransactions, // Data dari controller
+                    'empty' => 'Pilih Purchase Transaction',
+                    'label' => 'Purchase Transaction',
+                    'valueField' => 'id',  // Menggunakan 'id' sebagai value
+                    'textField' => 'full_description'  // Menampilkan full description
+                ]);
                 echo $this->Form->control('nominal');
                 echo $this->Form->control('payment_method', ['options' => ['Cash' => 'Cash', 'Credit Card' => 'Credit Card', 'Transfer Bank' => 'Transfer Bank', 'Installment-Cash' => 'Installment-Cash', 'Installment-Transfer Bank' => 'Installment-Transfer Bank ', 'Other' => 'Other']]);
                 echo $this->Form->control('status', ['options' => ['Waiting' => 'Waiting', 'Checking' => 'Checking', 'Invalid' => 'Invalid', 'Completed' => 'Completed', 'Cancelled' => 'Cancelled']]);

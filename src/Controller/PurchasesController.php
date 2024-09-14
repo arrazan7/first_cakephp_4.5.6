@@ -59,7 +59,7 @@ class PurchasesController extends AppController
     public function view($id = null)
     {
         $purchase = $this->Purchases->get($id, [
-            'contain' => ['Suppliers', 'PurchaseTransactions'],
+            'contain' => ['Suppliers', 'PurchaseTransactions', 'CreatedByEmployee', 'ModifiedByEmployee'],
         ]);
 
         $this->set(compact('purchase'));

@@ -96,6 +96,8 @@
                                     <td><?= h($purchases->price) ?></td>
                                     <td><?= h($purchases->created) ?></td>
                                     <td><?= h($purchases->modified) ?></td>
+                                    <td><?= h($purchases->created_by) ?></td>
+                                    <td><?= h($purchases->modified_by) ?></td>
                                     <td class="actions">
                                         <?= $this->Html->link(__('View'), ['controller' => 'Purchases', 'action' => 'view', $purchases->id]) ?>
                                         <?= $this->Html->link(__('Edit'), ['controller' => 'Purchases', 'action' => 'edit', $purchases->id]) ?>

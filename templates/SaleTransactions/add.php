@@ -21,13 +21,6 @@
             <fieldset>
                 <legend><?= __('Add Sale Transaction') ?></legend>
                 <?php
-                echo $this->Form->control('employee_id', [
-                    'options' => $employees, // Data dari controller
-                    'empty' => 'Pilih Employee',
-                    'label' => 'Employee',
-                    'valueField' => 'id',  // Menggunakan 'id' sebagai value
-                    'textField' => 'full_description'  // Menampilkan full description
-                ]);
                 echo $this->Form->control('customer_id', [
                     'options' => $customers, // Data dari controller
                     'empty' => 'Pilih Customer',
